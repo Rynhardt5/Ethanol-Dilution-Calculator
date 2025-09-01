@@ -32,6 +32,7 @@ export default function EthanolDilutionCalculator() {
   const [result, setResult] = useState<DilutionResult | null>(null)
   const [interactiveEthanolRatio, setInteractiveEthanolRatio] =
     useState<number>(50)
+  const [isDragging, setIsDragging] = useState<boolean>(false)
 
   const calculateDilution = () => {
     const c1 = Number.parseFloat(startingConcentration)
@@ -97,27 +98,27 @@ export default function EthanolDilutionCalculator() {
   }
 
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    e.preventDefault()
+    e.preventDefault() // Prevent scrolling
     const touch = e.touches[0]
     const rect = e.currentTarget.getBoundingClientRect()
     const y = touch.clientY - rect.top
-    const height = rect.height
-    const ratio = Math.max(0, Math.min(100, ((height - y) / height) * 100))
-    setInteractiveEthanolRatio(ratio)
+    const percentage = Math.max(0, Math.min(100, 100 - (y / rect.height) * 100))
+    setInteractiveEthanolRatio(percentage)
+    setIsDragging(true)
   }
 
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    e.preventDefault()
+    if (!isDragging) return
+    e.preventDefault() // Prevent scrolling during drag
     const touch = e.touches[0]
     const rect = e.currentTarget.getBoundingClientRect()
     const y = touch.clientY - rect.top
-    const height = rect.height
-    const ratio = Math.max(0, Math.min(100, ((height - y) / height) * 100))
-    setInteractiveEthanolRatio(ratio)
+    const percentage = Math.max(0, Math.min(100, 100 - (y / rect.height) * 100))
+    setInteractiveEthanolRatio(percentage)
   }
 
-  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
-    e.preventDefault()
+  const handleTouchEnd = () => {
+    setIsDragging(false)
   }
 
   return (
@@ -136,7 +137,7 @@ export default function EthanolDilutionCalculator() {
                 height={64}
               />
             </div>
-            <h1 className="text-4xl font-bold text-foreground font-serif">
+            <h1 className="text-2xl md:text-4xl text-left md:text-center  font-bold text-foreground font-serif">
               Ethanol Dilution Calculator
             </h1>
           </div>
@@ -579,14 +580,18 @@ export default function EthanolDilutionCalculator() {
                       95% Ethanol
                     </th>
                     <th className="text-left py-3 px-2 font-semibold">Water</th>
-                    <th className="text-left py-3 px-2 font-semibold">Ratio (approx)</th>
+                    <th className="text-left py-3 px-2 font-semibold">
+                      Ratio (approx)
+                    </th>
                     <th className="text-left py-3 px-2 font-semibold">
                       Typical Use
                     </th>
                     <th className="text-left py-3 px-2 font-semibold">
                       Herb Examples
                     </th>
-                    <th className="text-left py-3 px-2 font-semibold">Fresh/Dried</th>
+                    <th className="text-left py-3 px-2 font-semibold">
+                      Fresh/Dried
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
@@ -706,10 +711,12 @@ export default function EthanolDilutionCalculator() {
                   </tr>
                 </tbody>
               </table>
-              
+
               <div className="mt-4 p-3 bg-muted/30 rounded-lg border-l-4 border-primary/50">
                 <p className="text-sm text-muted-foreground">
-                  <strong>Note:</strong> These are common guidelines. Exact ethanol % may vary depending on herb freshness, water content, and desired constituents. Taste and adjust if needed.
+                  <strong>Note:</strong> These are common guidelines. Exact
+                  ethanol % may vary depending on herb freshness, water content,
+                  and desired constituents. Taste and adjust if needed.
                 </p>
               </div>
             </div>
@@ -1064,7 +1071,8 @@ export default function EthanolDilutionCalculator() {
                       depending on the herb).
                     </p>
                     <p>
-                      Seal tightly and store in a cool, dark place for 4–6 weeks.
+                      Seal tightly and store in a cool, dark place for 4–6
+                      weeks.
                     </p>
                     <p>Fresh leafy herbs may be ready in 2–4 weeks.</p>
                     <p>
@@ -1075,8 +1083,8 @@ export default function EthanolDilutionCalculator() {
                       the herb moving and prevent settling.
                     </p>
                     <p>
-                      After the maceration period, strain through muslin cloth or
-                      a fine sieve, pressing out as much liquid as possible.
+                      After the maceration period, strain through muslin cloth
+                      or a fine sieve, pressing out as much liquid as possible.
                     </p>
                   </div>
                 </div>
@@ -1114,12 +1122,12 @@ export default function EthanolDilutionCalculator() {
                       diluted in water, tea, or juice.
                     </p>
                     <p>
-                      While tinctures may be extracted at 50–95% ethanol, they are
-                      not usually taken straight at that strength.
+                      While tinctures may be extracted at 50–95% ethanol, they
+                      are not usually taken straight at that strength.
                     </p>
                     <p>
-                      Higher-proof tinctures are safe in small doses but can taste
-                      harsh and irritate the stomach.
+                      Higher-proof tinctures are safe in small doses but can
+                      taste harsh and irritate the stomach.
                     </p>
                     <p>
                       For comfort and tradition, tinctures are generally diluted
@@ -1130,9 +1138,7 @@ export default function EthanolDilutionCalculator() {
                 </div>
 
                 <div className="p-3 bg-primary/5 rounded-lg border">
-                  <h4 className="font-semibold text-sm mb-2">
-                    Storage
-                  </h4>
+                  <h4 className="font-semibold text-sm mb-2">Storage</h4>
                   <div className="text-sm text-muted-foreground space-y-2">
                     <p>
                       Keep tinctures in dark glass bottles, away from light and
@@ -1158,8 +1164,8 @@ export default function EthanolDilutionCalculator() {
                     </p>
                     <p>
                       <strong>Rule of thumb:</strong> If a tincture ever smells
-                      sour, off, or moldy, don&apos;t use it. Most tinctures at 40%+
-                      remain good for many years.
+                      sour, off, or moldy, don&apos;t use it. Most tinctures at
+                      40%+ remain good for many years.
                     </p>
                     <p>
                       Always label clearly with herb name, alcohol %, date, and
