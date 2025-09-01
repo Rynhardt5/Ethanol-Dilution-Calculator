@@ -98,7 +98,6 @@ export default function EthanolDilutionCalculator() {
   }
 
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    e.preventDefault() // Prevent scrolling
     const touch = e.touches[0]
     const rect = e.currentTarget.getBoundingClientRect()
     const y = touch.clientY - rect.top
@@ -109,7 +108,6 @@ export default function EthanolDilutionCalculator() {
 
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
     if (!isDragging) return
-    e.preventDefault() // Prevent scrolling during drag
     const touch = e.touches[0]
     const rect = e.currentTarget.getBoundingClientRect()
     const y = touch.clientY - rect.top
@@ -360,7 +358,8 @@ export default function EthanolDilutionCalculator() {
                   <div className="flex justify-center">
                     <div className="text-center">
                       <div
-                        className="interactive-jar relative w-24 h-40 md:w-28 md:h-44 border-4 border-foreground/40 rounded-b-xl bg-background mx-auto mb-4 cursor-pointer hover:border-primary/60 transition-colors touch-manipulation select-none"
+                        className="interactive-jar relative w-24 h-40 md:w-28 md:h-44 border-4 border-foreground/40 rounded-b-xl bg-background mx-auto mb-4 cursor-pointer hover:border-primary/60 transition-colors select-none"
+                        style={{ touchAction: 'none' }}
                         onMouseDown={handleMouseDown}
                         onTouchStart={handleTouchStart}
                         onTouchMove={handleTouchMove}
