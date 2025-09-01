@@ -31,7 +31,7 @@ export default function EthanolDilutionCalculator() {
   const [finalVolume, setFinalVolume] = useState<string>('')
   const [result, setResult] = useState<DilutionResult | null>(null)
   const [interactiveEthanolRatio, setInteractiveEthanolRatio] =
-    useState<number>(50)
+    useState<number>(40)
   const [isDragging, setIsDragging] = useState<boolean>(false)
 
   const calculateDilution = () => {
