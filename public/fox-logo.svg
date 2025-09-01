@@ -1,0 +1,62 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .fox-body { fill: #D4A574; stroke: #8B4513; stroke-width: 2; }
+      .fox-detail { fill: none; stroke: #8B4513; stroke-width: 1.5; }
+      .lotus { fill: #8FBC8F; stroke: #556B2F; stroke-width: 1; }
+    </style>
+  </defs>
+  
+  <!-- Fox body in circular form -->
+  <circle cx="100" cy="100" r="90" class="fox-body"/>
+  
+  <!-- Fox head -->
+  <ellipse cx="100" cy="85" rx="35" ry="30" class="fox-body"/>
+  
+  <!-- Fox ears -->
+  <path d="M75 65 L85 45 L95 65 Z" class="fox-body"/>
+  <path d="M105 65 L115 45 L125 65 Z" class="fox-body"/>
+  
+  <!-- Inner ear details -->
+  <path d="M80 60 L85 50 L90 60" class="fox-detail"/>
+  <path d="M110 60 L115 50 L120 60" class="fox-detail"/>
+  
+  <!-- Fox eyes (closed/peaceful) -->
+  <path d="M88 80 Q92 78 96 80" class="fox-detail"/>
+  <path d="M104 80 Q108 78 112 80" class="fox-detail"/>
+  
+  <!-- Fox nose -->
+  <ellipse cx="100" cy="88" rx="2" ry="1.5" fill="#8B4513"/>
+  
+  <!-- Fox mouth -->
+  <path d="M100 90 Q95 92 90 90" class="fox-detail"/>
+  <path d="M100 90 Q105 92 110 90" class="fox-detail"/>
+  
+  <!-- Fox tail curled around body -->
+  <path d="M140 120 Q160 100 150 80 Q140 60 120 70 Q100 80 110 100 Q120 120 140 120" class="fox-body"/>
+  
+  <!-- Tail tip -->
+  <ellipse cx="145" cy="115" rx="8" ry="12" fill="#F5DEB3"/>
+  
+  <!-- Lotus flower at bottom -->
+  <g transform="translate(100,140)">
+    <!-- Lotus petals -->
+    <ellipse cx="0" cy="0" rx="15" ry="8" class="lotus" transform="rotate(0)"/>
+    <ellipse cx="0" cy="0" rx="15" ry="8" class="lotus" transform="rotate(45)"/>
+    <ellipse cx="0" cy="0" rx="15" ry="8" class="lotus" transform="rotate(90)"/>
+    <ellipse cx="0" cy="0" rx="15" ry="8" class="lotus" transform="rotate(135)"/>
+    <ellipse cx="0" cy="0" rx="15" ry="8" class="lotus" transform="rotate(180)"/>
+    <ellipse cx="0" cy="0" rx="15" ry="8" class="lotus" transform="rotate(225)"/>
+    <ellipse cx="0" cy="0" rx="15" ry="8" class="lotus" transform="rotate(270)"/>
+    <ellipse cx="0" cy="0" rx="15" ry="8" class="lotus" transform="rotate(315)"/>
+    
+    <!-- Lotus center -->
+    <circle cx="0" cy="0" r="5" fill="#F0E68C"/>
+  </g>
+  
+  <!-- Decorative fur texture lines -->
+  <path d="M70 100 Q80 95 90 100" class="fox-detail"/>
+  <path d="M110 100 Q120 95 130 100" class="fox-detail"/>
+  <path d="M75 115 Q85 110 95 115" class="fox-detail"/>
+  <path d="M105 115 Q115 110 125 115" class="fox-detail"/>
+</svg>
