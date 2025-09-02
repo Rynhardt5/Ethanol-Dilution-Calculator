@@ -1,14 +1,20 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { CheckCircle, Loader2 } from 'lucide-react'
 import { useCartStore } from '@/lib/cart-store'
 import Link from 'next/link'
 
-export default function SuccessPage() {
+function SuccessPageContent() {
   const searchParams = useSearchParams()
   const sessionId = searchParams.get('session_id')
   const [loading, setLoading] = useState(true)
@@ -83,9 +89,7 @@ export default function SuccessPage() {
           <Card>
             <CardHeader>
               <CardTitle>Order Details</CardTitle>
-              <CardDescription>
-                Order ID: {orderDetails.id}
-              </CardDescription>
+              <CardDescription>Order ID: {orderDetails.id}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
@@ -103,7 +107,9 @@ export default function SuccessPage() {
                       <p>{orderDetails.shipping.address.line2}</p>
                     )}
                     <p>
-                      {orderDetails.shipping.address.city}, {orderDetails.shipping.address.state} {orderDetails.shipping.address.postal_code}
+                      {orderDetails.shipping.address.city},{' '}
+                      {orderDetails.shipping.address.state}{' '}
+                      {orderDetails.shipping.address.postal_code}
                     </p>
                     <p>{orderDetails.shipping.address.country}</p>
                   </div>
@@ -118,14 +124,19 @@ export default function SuccessPage() {
               </div>
 
               <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                <h3 className="font-semibold text-blue-900 mb-2">What's Next?</h3>
+                <h3 className="font-semibold text-blue-900 mb-2">
+                  What&apos;s Next?
+                </h3>
                 <p className="text-sm text-blue-800 mb-2">
-                  We&apos;ll process your order and prepare it for fulfillment. 
-                  If you selected in-person pickup, we&apos;ll contact you when your order is ready for collection.
-                  For shipping orders, we&apos;ll dispatch your items and provide tracking information.
+                  We&apos;ll process your order and prepare it for fulfillment.
+                  If you selected in-person pickup, we&apos;ll contact you when
+                  your order is ready for collection. For shipping orders,
+                  we&apos;ll dispatch your items and provide tracking
+                  information.
                 </p>
                 <p className="text-xs text-blue-700 font-medium">
-                  Please save your order details above - no email confirmation will be sent.
+                  Please save your order details above - no email confirmation
+                  will be sent.
                 </p>
               </div>
             </CardContent>
@@ -142,5 +153,22 @@ export default function SuccessPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-background p-4">
+        <div className="mx-auto max-w-2xl">
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="h-8 w-8 animate-spin" />
+            <span className="ml-2">Loading...</span>
+          </div>
+        </div>
+      </div>
+    }>
+      <SuccessPageContent />
+    </Suspense>
   )
 }

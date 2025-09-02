@@ -61,7 +61,6 @@ export async function POST(request: NextRequest) {
     }
 
     // Only collect shipping address if method is shipping
-    console.log('Collection method received:', collectionMethod)
     const sessionConfig = collectionMethod === 'shipping' 
       ? {
           ...baseConfig,
@@ -70,14 +69,6 @@ export async function POST(request: NextRequest) {
           }
         }
       : baseConfig
-
-    if (collectionMethod === 'shipping') {
-      console.log('✅ Shipping address collection ENABLED for countries:', ['AU'])
-    } else {
-      console.log('❌ Collection method is pickup, no shipping address needed')
-    }
-
-    console.log('Final session config:', JSON.stringify(sessionConfig, null, 2))
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const session = await stripe.checkout.sessions.create(sessionConfig as any)

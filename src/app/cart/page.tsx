@@ -23,12 +23,7 @@ export default function CartPage() {
     ? getTotalPrice() + shippingInfo.cost 
     : getTotalPrice()
 
-  // Debug: Log volume detection for troubleshooting
-  console.log('Cart items and shipping calculation:', {
-    items: items.map(item => ({ name: item.name, quantity: item.quantity })),
-    shippingInfo,
-    breakdown: shippingInfo.breakdown
-  })
+  // Calculate shipping based on cart items
 
   const handleQuantityChange = (id: string, newQuantity: number) => {
     if (newQuantity < 1) {

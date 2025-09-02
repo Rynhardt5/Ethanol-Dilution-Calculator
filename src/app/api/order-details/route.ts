@@ -25,23 +25,8 @@ export async function GET(request: NextRequest) {
           process.env.GITHUB_TOKEN
         )
 
-        // Debug: Log shipping details from Stripe
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const sessionData = session as unknown as Record<string, any>
-        console.log('=== STRIPE SESSION DEBUG ===')
-        console.log('Session ID:', sessionData.id)
-        console.log('Payment status:', sessionData.payment_status)
-        console.log('Collection method from metadata:', sessionData.metadata?.collectionMethod)
-        console.log('Full session object keys:', Object.keys(session))
-        console.log('Raw shipping_details:', sessionData.shipping_details)
-        console.log('Raw shipping_cost:', sessionData.shipping_cost)
-        console.log('Raw customer_details:', sessionData.customer_details)
-        console.log('Session mode:', sessionData.mode)
-        console.log('Session status:', sessionData.status)
-        
-        // Check if shipping address collection was enabled
-        console.log('Shipping address collection config:', sessionData.shipping_address_collection)
-        console.log('=== END DEBUG ===')
 
         // Extract shipping address - Stripe stores it in customer_details.address when shipping_details is undefined
         const shippingDetails = sessionData.shipping_details
@@ -78,7 +63,7 @@ export async function GET(request: NextRequest) {
           shippingAddress,
         }
 
-        console.log('Order being saved:', order)
+        // Order saved to GitHub Gist
 
         await gistStorage.saveOrder(order)
       } catch (gistError) {
