@@ -15,8 +15,7 @@ import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
-import { Calculator, Beaker, Leaf, Info, BadgeInfo } from 'lucide-react'
-import Image from 'next/image'
+import { Calculator, Beaker, Leaf, Info } from 'lucide-react'
 import Link from 'next/link'
 
 interface DilutionResult {
@@ -602,7 +601,7 @@ export default function EthanolDilutionCalculator() {
                     </td>
                     <td className="py-3 px-2 font-mono font-semibold">42 mL</td>
                     <td className="py-3 px-2 font-mono font-semibold">58 mL</td>
-                    <td className="py-3 px-2 font-mono text-sm bg-muted/50 rounded px-2 py-1">
+                    <td className="py-3 px-2 font-mono text-sm bg-muted/50 rounded">
                       4 : 5.5
                     </td>
                     <td className="py-3 px-2">Fresh leaves, flowers</td>
@@ -621,7 +620,7 @@ export default function EthanolDilutionCalculator() {
                     </td>
                     <td className="py-3 px-2 font-mono font-semibold">53 mL</td>
                     <td className="py-3 px-2 font-mono font-semibold">47 mL</td>
-                    <td className="py-3 px-2 font-mono text-sm bg-muted/50 rounded px-2 py-1">
+                    <td className="py-3 px-2 font-mono text-sm bg-muted/50 rounded">
                       10 : 9
                     </td>
                     <td className="py-3 px-2">Aromatics, general herbs</td>
@@ -640,7 +639,7 @@ export default function EthanolDilutionCalculator() {
                     </td>
                     <td className="py-3 px-2 font-mono font-semibold">63 mL</td>
                     <td className="py-3 px-2 font-mono font-semibold">37 mL</td>
-                    <td className="py-3 px-2 font-mono text-sm bg-muted/50 rounded px-2 py-1">
+                    <td className="py-3 px-2 font-mono text-sm bg-muted/50 rounded">
                       6 : 3.5
                     </td>
                     <td className="py-3 px-2">Dried roots, barks</td>
@@ -659,7 +658,7 @@ export default function EthanolDilutionCalculator() {
                     </td>
                     <td className="py-3 px-2 font-mono font-semibold">74 mL</td>
                     <td className="py-3 px-2 font-mono font-semibold">26 mL</td>
-                    <td className="py-3 px-2 font-mono text-sm bg-muted/50 rounded px-2 py-1">
+                    <td className="py-3 px-2 font-mono text-sm bg-muted/50 rounded">
                       14 : 5
                     </td>
                     <td className="py-3 px-2">Tough dried roots, barks</td>
@@ -678,7 +677,7 @@ export default function EthanolDilutionCalculator() {
                     </td>
                     <td className="py-3 px-2 font-mono font-semibold">84 mL</td>
                     <td className="py-3 px-2 font-mono font-semibold">16 mL</td>
-                    <td className="py-3 px-2 font-mono text-sm bg-muted/50 rounded px-2 py-1">
+                    <td className="py-3 px-2 font-mono text-sm bg-muted/50 rounded">
                       5 : 1
                     </td>
                     <td className="py-3 px-2">Sticky roots, resins</td>
@@ -697,7 +696,7 @@ export default function EthanolDilutionCalculator() {
                     </td>
                     <td className="py-3 px-2 font-mono font-semibold">95 mL</td>
                     <td className="py-3 px-2 font-mono font-semibold">5 mL</td>
-                    <td className="py-3 px-2 font-mono text-sm bg-muted/50 rounded px-2 py-1">
+                    <td className="py-3 px-2 font-mono text-sm bg-muted/50 rounded">
                       19 : 1
                     </td>
                     <td className="py-3 px-2">Hard resins, gums, propolis</td>

@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create Stripe checkout session
-    const sessionConfig: any = {
+    const baseConfig = {
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
@@ -62,20 +62,25 @@ export async function POST(request: NextRequest) {
 
     // Only collect shipping address if method is shipping
     console.log('Collection method received:', collectionMethod)
+    const sessionConfig = collectionMethod === 'shipping' 
+      ? {
+          ...baseConfig,
+          shipping_address_collection: {
+            allowed_countries: ['AU'],
+          }
+        }
+      : baseConfig
+
     if (collectionMethod === 'shipping') {
-      sessionConfig.shipping_address_collection = {
-        allowed_countries: ['AU'],
-      }
-      console.log('✅ Shipping address collection ENABLED for countries:', [
-        'AU',
-      ])
+      console.log('✅ Shipping address collection ENABLED for countries:', ['AU'])
     } else {
       console.log('❌ Collection method is pickup, no shipping address needed')
     }
 
     console.log('Final session config:', JSON.stringify(sessionConfig, null, 2))
 
-    const session = await stripe.checkout.sessions.create(sessionConfig)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const session = await stripe.checkout.sessions.create(sessionConfig as any)
 
     return NextResponse.json({ url: session.url })
   } catch (error) {

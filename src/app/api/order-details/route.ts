@@ -26,24 +26,26 @@ export async function GET(request: NextRequest) {
         )
 
         // Debug: Log shipping details from Stripe
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const sessionData = session as unknown as Record<string, any>
         console.log('=== STRIPE SESSION DEBUG ===')
-        console.log('Session ID:', (session as any).id)
-        console.log('Payment status:', (session as any).payment_status)
-        console.log('Collection method from metadata:', (session as any).metadata?.collectionMethod)
+        console.log('Session ID:', sessionData.id)
+        console.log('Payment status:', sessionData.payment_status)
+        console.log('Collection method from metadata:', sessionData.metadata?.collectionMethod)
         console.log('Full session object keys:', Object.keys(session))
-        console.log('Raw shipping_details:', (session as any).shipping_details)
-        console.log('Raw shipping_cost:', (session as any).shipping_cost)
-        console.log('Raw customer_details:', (session as any).customer_details)
-        console.log('Session mode:', (session as any).mode)
-        console.log('Session status:', (session as any).status)
+        console.log('Raw shipping_details:', sessionData.shipping_details)
+        console.log('Raw shipping_cost:', sessionData.shipping_cost)
+        console.log('Raw customer_details:', sessionData.customer_details)
+        console.log('Session mode:', sessionData.mode)
+        console.log('Session status:', sessionData.status)
         
         // Check if shipping address collection was enabled
-        console.log('Shipping address collection config:', (session as any).shipping_address_collection)
+        console.log('Shipping address collection config:', sessionData.shipping_address_collection)
         console.log('=== END DEBUG ===')
 
         // Extract shipping address - Stripe stores it in customer_details.address when shipping_details is undefined
-        const shippingDetails = (session as any).shipping_details
-        const customerDetails = (session as any).customer_details
+        const shippingDetails = sessionData.shipping_details
+        const customerDetails = sessionData.customer_details
         
         const shippingAddress = shippingDetails?.address ? {
           line1: shippingDetails.address.line1 || '',
@@ -62,17 +64,17 @@ export async function GET(request: NextRequest) {
         } : undefined
 
         const order = {
-          id: (session as any).id,
-          customerEmail: (session as any).customer_details?.email || '',
-          customerName: (session as any).customer_details?.name || '',
-          customerPhone: (session as any).customer_details?.phone || undefined,
-          items: JSON.parse((session as any).metadata?.items || '[]'),
-          totalAmount: (session as any).amount_total || 0,
+          id: sessionData.id,
+          customerEmail: sessionData.customer_details?.email || '',
+          customerName: sessionData.customer_details?.name || '',
+          customerPhone: sessionData.customer_details?.phone || undefined,
+          items: JSON.parse(sessionData.metadata?.items || '[]'),
+          totalAmount: sessionData.amount_total || 0,
           status: 'pending' as const,
-          paymentIntentId: (session as any).payment_intent as string,
+          paymentIntentId: sessionData.payment_intent as string,
           createdAt: new Date().toISOString(),
-          collectionMethod: ((session as any).metadata?.collectionMethod as 'pickup' | 'shipping') || 'shipping',
-          shippingCost: (session as any).metadata?.shippingCost ? parseInt((session as any).metadata.shippingCost) : undefined,
+          collectionMethod: (sessionData.metadata?.collectionMethod as 'pickup' | 'shipping') || 'shipping',
+          shippingCost: sessionData.metadata?.shippingCost ? parseInt(sessionData.metadata.shippingCost) : undefined,
           shippingAddress,
         }
 
