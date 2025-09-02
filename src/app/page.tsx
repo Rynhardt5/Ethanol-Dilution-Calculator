@@ -17,6 +17,7 @@ import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import { Calculator, Beaker, Leaf, Info, BadgeInfo } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 interface DilutionResult {
   ethanolVolume: number
@@ -126,7 +127,7 @@ export default function EthanolDilutionCalculator() {
         <div className="text-center space-y-4">
           <div className="flex items-center justify-center gap-4">
             {/* Logo */}
-            <div className="flex-shrink-0">
+            {/* <div className="flex-shrink-0">
               <Image
                 src="/fox-logo.png"
                 alt="Fox Logo"
@@ -134,7 +135,7 @@ export default function EthanolDilutionCalculator() {
                 width={64}
                 height={64}
               />
-            </div>
+            </div> */}
             <h1 className="text-2xl md:text-4xl text-left md:text-center  font-bold text-foreground font-serif">
               Ethanol Dilution Calculator
             </h1>
@@ -146,16 +147,17 @@ export default function EthanolDilutionCalculator() {
           </p>
 
           {/* Buy Ethanol Button */}
-          <div className="pt-4">
-            <a
-              href="https://buy.stripe.com/dRmfZid941275m94Ap8og02"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors shadow-lg"
-            >
-              <Leaf className="h-5 w-5" />
-              Buy Premium Organic Ethanol
-            </a>
+          <div className="pt-4 flex justify-center">
+            <Link href="/shop">
+              <Button
+                variant="default"
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                <Leaf className="h-5 w-5" />
+                Buy Premium Organic Ethanol
+              </Button>
+            </Link>
           </div>
         </div>
 
