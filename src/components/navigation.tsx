@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { ShoppingCart, Calculator } from 'lucide-react'
+import { ShoppingCart, Calculator, Zap } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { useCartStore } from '@/lib/cart-store'
@@ -50,6 +50,16 @@ export function Navigation() {
                 size="sm"
               >
                 Shop
+              </Button>
+            </Link>
+
+            <Link href="/extraction">
+              <Button
+                variant={pathname === '/extraction' ? 'default' : 'ghost'}
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                Extraction
               </Button>
             </Link>
 
