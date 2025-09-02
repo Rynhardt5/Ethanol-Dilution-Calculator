@@ -93,7 +93,7 @@ export default function CartPage() {
 
   return (
     <div className="min-h-screen bg-background p-4">
-      <div className="mx-auto max-w-4xl space-y-8">
+      <div className="mx-auto max-w-4xl space-y-6 lg:space-y-8">
         {/* Header */}
         <div className="text-center space-y-4">
           <h1 className="text-3xl md:text-4xl font-bold text-foreground font-serif">
@@ -104,7 +104,7 @@ export default function CartPage() {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-4">
             <Card>
@@ -116,7 +116,7 @@ export default function CartPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 {items.map((item) => (
-                  <div key={item.id} className="flex items-center gap-4 p-4 border rounded-lg">
+                  <div key={item.id} className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 border rounded-lg">
                     {item.image && (
                       <div className="relative h-16 w-16 flex-shrink-0">
                         <Image
@@ -129,9 +129,9 @@ export default function CartPage() {
                     )}
                     
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold truncate">{item.name}</h3>
+                      <h3 className="font-semibold">{item.name}</h3>
                       {item.description && (
-                        <p className="text-sm text-muted-foreground truncate">
+                        <p className="text-sm text-muted-foreground">
                           {item.description}
                         </p>
                       )}
@@ -140,37 +140,39 @@ export default function CartPage() {
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center justify-between w-full sm:w-auto gap-2">
+                      <div className="flex items-center gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                        >
+                          <Minus className="h-4 w-4" />
+                        </Button>
+                        <Input
+                          type="number"
+                          value={item.quantity}
+                          onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value) || 1)}
+                          className="w-16 text-center"
+                          min="1"
+                        />
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                        >
+                          <Plus className="h-4 w-4" />
+                        </Button>
+                      </div>
+
                       <Button
-                        variant="outline"
+                        variant="destructive"
                         size="sm"
-                        onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                        onClick={() => removeItem(item.id)}
                       >
-                        <Minus className="h-4 w-4" />
-                      </Button>
-                      <Input
-                        type="number"
-                        value={item.quantity}
-                        onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value) || 1)}
-                        className="w-16 text-center"
-                        min="1"
-                      />
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                      >
-                        <Plus className="h-4 w-4" />
+                        <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>
-
-                    <Button
-                      variant="destructive"
-                      size="sm"
-                      onClick={() => removeItem(item.id)}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
                   </div>
                 ))}
               </CardContent>
@@ -234,8 +236,8 @@ export default function CartPage() {
                 <div className="space-y-2">
                   {items.map((item) => (
                     <div key={item.id} className="flex justify-between text-sm">
-                      <span>{item.name} × {item.quantity}</span>
-                      <span>${((item.price * item.quantity) / 100).toFixed(2)}</span>
+                      <span className="truncate pr-2">{item.name} × {item.quantity}</span>
+                      <span className="flex-shrink-0">${((item.price * item.quantity) / 100).toFixed(2)}</span>
                     </div>
                   ))}
                 </div>
@@ -246,11 +248,11 @@ export default function CartPage() {
                   <>
                     <div className="flex justify-between text-sm">
                       <span>Subtotal</span>
-                      <span>${(getTotalPrice() / 100).toFixed(2)}</span>
+                      <span className="flex-shrink-0">${(getTotalPrice() / 100).toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span>Shipping ({shippingInfo.description})</span>
-                      <span>{shippingInfo.cost === 0 ? 'Free' : formatShippingCost(shippingInfo.cost)}</span>
+                      <span className="truncate pr-2">Shipping ({shippingInfo.description})</span>
+                      <span className="flex-shrink-0">{shippingInfo.cost === 0 ? 'Free' : formatShippingCost(shippingInfo.cost)}</span>
                     </div>
                     {shippingInfo.breakdown.length > 0 && (
                       <div className="text-xs text-muted-foreground mt-1">
@@ -266,7 +268,7 @@ export default function CartPage() {
                 
                 <div className="flex justify-between text-lg font-bold">
                   <span>Total</span>
-                  <span>${(totalWithShipping / 100).toFixed(2)}</span>
+                  <span className="flex-shrink-0">${(totalWithShipping / 100).toFixed(2)}</span>
                 </div>
 
                 <Button 

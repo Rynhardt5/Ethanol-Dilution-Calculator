@@ -33,7 +33,12 @@ export default function RootLayout({
       >
         <Navigation />
         {children}
-        <Toaster position="top-center" offset={80} />
+        <Toaster
+          position="top-right"
+          closeButton
+          offset={80}
+          mobileOffset={80}
+        />
       </body>
     </html>
   )
