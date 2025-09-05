@@ -402,7 +402,7 @@ export default function ExtractionPage() {
                     material like eager magnets.
                   </p>
                 </div>
-                <div className="ml-16 space-y-2">
+                <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                     <span className="text-sm">
@@ -446,7 +446,7 @@ export default function ExtractionPage() {
                     herbal extractions.
                   </p>
                 </div>
-                <div className="ml-16 space-y-2">
+                <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
                     <span className="text-sm">
@@ -492,12 +492,12 @@ export default function ExtractionPage() {
                     🎯 Alcohol Dominates
                   </h4>
                   <p className="text-sm mb-3">
-                    <strong>The Scene:</strong> Alcohol takes charge while
-                    water sits on the sidelines. This is for the tough,
-                    resinous materials.
+                    <strong>The Scene:</strong> Alcohol takes charge while water
+                    sits on the sidelines. This is for the tough, resinous
+                    materials.
                   </p>
                 </div>
-                <div className="ml-16 space-y-2">
+                <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                     <span className="text-sm">
