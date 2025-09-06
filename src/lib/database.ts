@@ -223,8 +223,8 @@ export class HerbsDatabase {
     limit: number;
     offset: number;
   }) {
-    let whereConditions: string[] = [];
-    let params: any[] = [];
+    const whereConditions: string[] = [];
+    const params: (string | number)[] = [];
     let paramIndex = 1;
 
     // Build WHERE conditions based on filters
@@ -320,8 +320,8 @@ export class HerbsDatabase {
     indication?: string | null;
     constituent?: string | null;
   }) {
-    let whereConditions: string[] = [];
-    let params: any[] = [];
+    const whereConditions: string[] = [];
+    const params: (string | number)[] = [];
     let paramIndex = 1;
 
     // Build WHERE conditions (same logic as searchHerbsWithFilters)
