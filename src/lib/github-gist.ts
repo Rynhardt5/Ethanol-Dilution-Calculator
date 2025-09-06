@@ -115,4 +115,63 @@ export class GitHubGistStorage {
       throw error
     }
   }
+
+  async updateHerbsInGist(herbsData: unknown[]): Promise<void> {
+    try {
+      console.log(`Updating herbs data in gist with ${herbsData.length} herbs...`)
+      
+      const response = await fetch(`https://api.github.com/gists/${this.gistId}`, {
+        method: 'PATCH',
+        headers: {
+          'Authorization': `token ${this.token}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          files: {
+            'herbs-data.json': {
+              content: JSON.stringify(herbsData, null, 2)
+            }
+          }
+        })
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(`Failed to update herbs data: ${response.status} - ${errorData.message}`)
+      }
+
+      console.log('✅ Herbs data successfully updated in GitHub Gist')
+    } catch (error) {
+      console.error('❌ Error updating herbs data in gist:', error)
+      throw error
+    }
+  }
+
+  async getHerbsFromGist(): Promise<unknown[]> {
+    try {
+      const response = await fetch(`https://api.github.com/gists/${this.gistId}`, {
+        headers: {
+          'Authorization': `token ${this.token}`,
+          'Accept': 'application/vnd.github.v3+json',
+        },
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch herbs data')
+      }
+
+      const gist = await response.json()
+      const herbsFile = gist.files['herbs-data.json']
+      
+      if (!herbsFile) {
+        return []
+      }
+
+      return JSON.parse(herbsFile.content)
+    } catch (error) {
+      console.error('Error fetching herbs data:', error)
+      return []
+    }
+  }
 }

@@ -47,7 +47,7 @@ interface Product {
 
 interface ProductListProps {
   products: Product[]
-  onRefresh: () => void
+  onRefresh?: () => void
 }
 
 export function ProductList({ products, onRefresh }: ProductListProps) {
@@ -173,7 +173,7 @@ export function ProductList({ products, onRefresh }: ProductListProps) {
       toast.success('Product created successfully')
       setIsCreateModalOpen(false)
       resetForm()
-      onRefresh()
+      onRefresh?.()
     } catch (error) {
       console.error('Error creating product:', error)
       toast.error('Failed to create product')
@@ -212,7 +212,7 @@ export function ProductList({ products, onRefresh }: ProductListProps) {
       setIsEditModalOpen(false)
       setSelectedProduct(null)
       resetForm()
-      onRefresh()
+      onRefresh?.()
     } catch (error) {
       console.error('Error updating product:', error)
       toast.error('Failed to update product')
@@ -241,7 +241,7 @@ export function ProductList({ products, onRefresh }: ProductListProps) {
       toast.success(
         `Product ${!product.active ? 'activated' : 'deactivated'} successfully`
       )
-      onRefresh()
+      onRefresh?.()
     } catch (error) {
       console.error('Error updating product status:', error)
       toast.error('Failed to update product status')
@@ -266,7 +266,7 @@ export function ProductList({ products, onRefresh }: ProductListProps) {
       }
 
       toast.success('Product archived successfully')
-      onRefresh()
+      onRefresh?.()
     } catch (error) {
       console.error('Error deleting product:', error)
       toast.error('Failed to archive product')

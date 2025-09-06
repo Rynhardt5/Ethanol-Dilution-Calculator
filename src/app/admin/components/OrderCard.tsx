@@ -31,8 +31,8 @@ interface OrderCardProps {
   order: Order
   updating: string | null
   refunding: string | null
-  onUpdateStatus: (orderId: string, status: Order['status']) => void
-  onRefund: (orderId: string, paymentIntentId: string) => void
+  onUpdateStatus?: (orderId: string, status: 'pending' | 'collected' | 'shipped') => void
+  onRefund?: (orderId: string, paymentIntentId: string) => void
 }
 
 export function OrderCard({
@@ -189,7 +189,7 @@ export function OrderCard({
           {order.status === 'pending' && (
             <>
               <Button
-                onClick={() => onUpdateStatus(order.id, 'collected')}
+                onClick={() => onUpdateStatus?.(order.id, 'collected')}
                 disabled={updating === order.id}
                 size="sm"
                 className="flex items-center gap-2"
@@ -198,7 +198,7 @@ export function OrderCard({
                 Mark as Collected
               </Button>
               <Button
-                onClick={() => onUpdateStatus(order.id, 'shipped')}
+                onClick={() => onUpdateStatus?.(order.id, 'shipped')}
                 disabled={updating === order.id}
                 variant="outline"
                 size="sm"
@@ -211,7 +211,7 @@ export function OrderCard({
           )}
           {(order.status === 'collected' || order.status === 'shipped') && (
             <Button
-              onClick={() => onUpdateStatus(order.id, 'pending')}
+              onClick={() => onUpdateStatus?.(order.id, 'pending')}
               disabled={updating === order.id}
               variant="outline"
               size="sm"
@@ -221,7 +221,7 @@ export function OrderCard({
           )}
 
           <Button
-            onClick={() => onRefund(order.id, order.paymentIntentId)}
+            onClick={() => onRefund?.(order.id, order.paymentIntentId)}
             disabled={refunding === order.id || updating === order.id}
             variant="destructive"
             size="sm"

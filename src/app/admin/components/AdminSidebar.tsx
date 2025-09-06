@@ -6,8 +6,8 @@ import { Package, Users, X, Menu, ShoppingCart } from 'lucide-react'
 interface AdminSidebarProps {
   activeSection: 'orders' | 'customers' | 'products'
   sidebarOpen: boolean
-  onSectionChange: (section: 'orders' | 'customers' | 'products') => void
-  onToggleSidebar: () => void
+  onSectionChange?: (section: 'orders' | 'customers' | 'products') => void
+  onToggleSidebar?: () => void
 }
 
 export function AdminSidebar({
@@ -43,14 +43,14 @@ export function AdminSidebar({
               variant="ghost"
               size="sm"
               className="lg:hidden"
-              onClick={onToggleSidebar}
+              onClick={() => onToggleSidebar?.()}
             >
               <X className="h-4 w-4" />
             </Button>
           </div>
           <nav className="space-y-2">
             <button
-              onClick={() => onSectionChange('orders')}
+              onClick={() => onSectionChange?.('orders')}
               className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                 activeSection === 'orders'
                   ? 'bg-blue-100 text-blue-700'
@@ -61,7 +61,7 @@ export function AdminSidebar({
               Orders
             </button>
             <button
-              onClick={() => onSectionChange('customers')}
+              onClick={() => onSectionChange?.('customers')}
               className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                 activeSection === 'customers'
                   ? 'bg-blue-100 text-blue-700'
@@ -72,7 +72,7 @@ export function AdminSidebar({
               Customers
             </button>
             <button
-              onClick={() => onSectionChange('products')}
+              onClick={() => onSectionChange?.('products')}
               className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                 activeSection === 'products'
                   ? 'bg-blue-100 text-blue-700'
@@ -94,11 +94,11 @@ export function MobileHeader({
   onToggleSidebar,
 }: {
   activeSection: 'orders' | 'customers' | 'products'
-  onToggleSidebar: () => void
+  onToggleSidebar?: () => void
 }) {
   return (
     <div className="lg:hidden bg-card border-b border-border p-4 flex items-center justify-between">
-      <Button variant="ghost" size="sm" onClick={onToggleSidebar}>
+      <Button variant="ghost" size="sm" onClick={() => onToggleSidebar?.()}>
         <Menu className="h-5 w-5" />
       </Button>
       <h1 className="text-lg font-semibold">

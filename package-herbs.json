@@ -1,0 +1,16 @@
+{
+  "name": "duke-herbs-database-processor",
+  "version": "1.0.0",
+  "description": "Process Dr. James Duke's phytochemical database CSV files into a structured herbs database",
+  "main": "herbs-database-processor.js",
+  "scripts": {
+    "process": "node herbs-database-processor.js",
+    "start": "node herbs-database-processor.js"
+  },
+  "dependencies": {
+    "csv-parser": "^3.0.0"
+  },
+  "keywords": ["herbs", "phytochemicals", "database", "ethnobotany", "medicinal plants"],
+  "author": "Duke Herbs Database Processor",
+  "license": "MIT"
+}
