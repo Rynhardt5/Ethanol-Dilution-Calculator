@@ -1,0 +1,1134 @@
+{
+  "totalHerbs": 278,
+  "therapeuticCategories": [
+    "wound healing",
+    "digestive",
+    "immune support",
+    "cardiovascular",
+    "liver support",
+    "urinary",
+    "cold and flu",
+    "antimicrobial",
+    "anti-inflammatory",
+    "nervous system",
+    "pain relief",
+    "antioxidant",
+    "respiratory",
+    "skin conditions",
+    "women's health"
+  ],
+  "herbNames": [
+    {
+      "latin": "Achillea millefolium",
+      "common": "key medicinal pl ants"
+    },
+    {
+      "latin": "Acorus calamus",
+      "common": "An herbaceous, aquatic"
+    },
+    {
+      "latin": "Aesculus hippocastanum",
+      "common": "divided leaves, white"
+    },
+    {
+      "latin": "Allium sativum",
+      "common": "A bulbous perennial"
+    },
+    {
+      "latin": "Alpinia officinarum",
+      "common": "A perennial aromatic"
+    },
+    {
+      "latin": "Daucus visnaga",
+      "common": "key medicinal pl ants"
+    },
+    {
+      "latin": "Apium graveolens",
+      "common": "A biennial with a"
+    },
+    {
+      "latin": "Arctium lappa",
+      "common": "stems that grow to 5 ft"
+    },
+    {
+      "latin": "Bitter glycosides",
+      "common": ""
+    },
+    {
+      "latin": "Artemisia absinthium",
+      "common": "3 ft (1 m), with gray-"
+    },
+    {
+      "latin": "Artemisia annua",
+      "common": "A perennial growing to"
+    },
+    {
+      "latin": "Astragalus membranaceus",
+      "common": "A perennial growing"
+    },
+    {
+      "latin": "Atropa belladonna",
+      "common": "A perennial with large"
+    },
+    {
+      "latin": "Volatile bases",
+      "common": "Parkinson’s disease."
+    },
+    {
+      "latin": "Azadirachta indica",
+      "common": "An evergreen tree,"
+    },
+    {
+      "latin": "Calendula officinalis",
+      "common": "to 2 ft (60 cm),"
+    },
+    {
+      "latin": "Hydrocotyle asiatica",
+      "common": "A perennial, herbaceous"
+    },
+    {
+      "latin": "Citrus limon",
+      "common": "tree growing to"
+    },
+    {
+      "latin": "Codonopsis pilosula",
+      "common": "key medicinal pl ants"
+    },
+    {
+      "latin": "Plectranthus barbatus",
+      "common": "An aromatic perennial,"
+    },
+    {
+      "latin": "Corydalis yanhusuo",
+      "common": "plant growing to"
+    },
+    {
+      "latin": "Crataeva nurvula",
+      "common": "A large deciduous"
+    },
+    {
+      "latin": "Glucosilinates                         kapha",
+      "common": ""
+    },
+    {
+      "latin": "Crocus sativa",
+      "common": "A perennial growing"
+    },
+    {
+      "latin": "The corms",
+      "common": ""
+    },
+    {
+      "latin": "Dioscorea villosa",
+      "common": "vine, climbing to 20 ft"
+    },
+    {
+      "latin": "Elettaria cardamomum",
+      "common": "to 16 ft (5 m), with"
+    },
+    {
+      "latin": "Eleutherococcus senticosus",
+      "common": "shrub, growing"
+    },
+    {
+      "latin": "Ephedra sinica",
+      "common": "growing to 20 in"
+    },
+    {
+      "latin": "Eucalyptus globulus",
+      "common": "An evergreen tree"
+    },
+    {
+      "latin": "Syzgium aromaticum",
+      "common": "pyramid-shaped tree"
+    },
+    {
+      "latin": "Filipendula ulmaria",
+      "common": "5 ft (1.5 m), with"
+    },
+    {
+      "latin": "Volatile oil",
+      "common": ""
+    },
+    {
+      "latin": "Gentiana lutea",
+      "common": "growing to 4 ft (1.2 m),"
+    },
+    {
+      "latin": "Ginkgo biloba",
+      "common": "A deciduous tree with"
+    },
+    {
+      "latin": "Glycyrrhiza glabra",
+      "common": "A woody-stemmed"
+    },
+    {
+      "latin": "Hamamelis virginiana",
+      "common": "tree growing to16 ft"
+    },
+    {
+      "latin": "Harpagophytum procumbens",
+      "common": "reaching 5 ft (1.5 m)"
+    },
+    {
+      "latin": "Humulus lupulus",
+      "common": "perennial, growing"
+    },
+    {
+      "latin": "Hydrastis canadensis",
+      "common": "perennial, with a thick"
+    },
+    {
+      "latin": "Hypericum perforatum",
+      "common": "growing to 32 in"
+    },
+    {
+      "latin": "Polycyclic diones",
+      "common": ""
+    },
+    {
+      "latin": "Inula helenium",
+      "common": "to 10 ft (3 m), with"
+    },
+    {
+      "latin": "Linum usitatissimum",
+      "common": "3 ft (1 m) tall, with"
+    },
+    {
+      "latin": "Lobelia inflata",
+      "common": "to 20 in (50 cm), with"
+    },
+    {
+      "latin": "Melaleuca alternifolia",
+      "common": "23 ft (7 m), with"
+    },
+    {
+      "latin": "Melissa officinalis",
+      "common": "to 5 ft (1.5 m), with"
+    },
+    {
+      "latin": "Seed kernel",
+      "common": ""
+    },
+    {
+      "latin": "Panax ginseng",
+      "common": "to 3 ft (1 m), with oval,"
+    },
+    {
+      "latin": "Passiflora incarnata",
+      "common": "growing to 30 ft (9 m),"
+    },
+    {
+      "latin": "Pelargonium sidoides",
+      "common": "10 in (25 cm), pelargonium"
+    },
+    {
+      "latin": "Persea americana",
+      "common": "growing to 65 ft"
+    },
+    {
+      "latin": "Piper methysticum",
+      "common": "climbing to 10 ft (3 m),"
+    },
+    {
+      "latin": "Polynesian vine",
+      "common": ""
+    },
+    {
+      "latin": "Polygonum multiflorum",
+      "common": "A perennial climber,"
+    },
+    {
+      "latin": "Rehmannia glutinosa",
+      "common": "A perennial, reaching"
+    },
+    {
+      "latin": "Rheum palmatum",
+      "common": "perennial growing to"
+    },
+    {
+      "latin": "Rhodiola rosea",
+      "common": "Key Medicinal Pl ants"
+    },
+    {
+      "latin": "Rosmarinus officinalis",
+      "common": "A strongly aromatic"
+    },
+    {
+      "latin": "Salix alba",
+      "common": "A deciduous tree"
+    },
+    {
+      "latin": "Salvia miltiorrhiza",
+      "common": "growing to 32 in"
+    },
+    {
+      "latin": "Salvia officinalis",
+      "common": "growing to 32 in"
+    },
+    {
+      "latin": "Sambucus nigra",
+      "common": "growing to 33 ft"
+    },
+    {
+      "latin": "Schisandra chinensis",
+      "common": "vine reaching up to"
+    },
+    {
+      "latin": "Scutellaria lateriflora",
+      "common": "A perennial growing"
+    },
+    {
+      "latin": "Sabal serrulata",
+      "common": "A small palm"
+    },
+    {
+      "latin": "Carduus marianus",
+      "common": "A spiny biennial,"
+    },
+    {
+      "latin": "Symphytum officinale",
+      "common": "A perennial growing"
+    },
+    {
+      "latin": "Tanacetum parthenium",
+      "common": "perennial growing"
+    },
+    {
+      "latin": "Taraxacum officinale",
+      "common": "to 20 in (50 cm),"
+    },
+    {
+      "latin": "Terminalia arjuna",
+      "common": "reaching 100 ft (30 m),"
+    },
+    {
+      "latin": "Thymus vulgaris",
+      "common": "growing to 16 in"
+    },
+    {
+      "latin": "Ulmus rubra",
+      "common": "A large tree growing"
+    },
+    {
+      "latin": "Urtica dioica",
+      "common": "to 5 ft (1.5 m), with"
+    },
+    {
+      "latin": "Vaccinium myrtillus",
+      "common": "growing to 16 in"
+    },
+    {
+      "latin": "Valeriana officinalis",
+      "common": "Erect perennial"
+    },
+    {
+      "latin": "Verbena officinalis",
+      "common": "A slender perennial"
+    },
+    {
+      "latin": "Viburnum opulus",
+      "common": "or tree growing to"
+    },
+    {
+      "latin": "Volatile oil",
+      "common": ""
+    },
+    {
+      "latin": "Withania somnifera",
+      "common": "A stout shrub growing"
+    },
+    {
+      "latin": "Steroidal lactones",
+      "common": ""
+    },
+    {
+      "latin": "Zanthoxylum americanum",
+      "common": "A deciduous shrub"
+    },
+    {
+      "latin": "Zea mays",
+      "common": "An annual grass"
+    },
+    {
+      "latin": "Zingiber officinale",
+      "common": "A perennial growing"
+    },
+    {
+      "latin": "Abies balsamea",
+      "common": ""
+    },
+    {
+      "latin": "Abrus precatorius",
+      "common": ""
+    },
+    {
+      "latin": "Adonis vernalis",
+      "common": "(Polypodiaceae)"
+    },
+    {
+      "latin": "Aletris farinosa",
+      "common": ""
+    },
+    {
+      "latin": "Allium cepa",
+      "common": ""
+    },
+    {
+      "latin": "Althaea officinalis",
+      "common": ""
+    },
+    {
+      "latin": "Ammi majus",
+      "common": ""
+    },
+    {
+      "latin": "Anagallis arvensis",
+      "common": ""
+    },
+    {
+      "latin": "It has",
+      "common": "been shown to have significant antibacterial"
+    },
+    {
+      "latin": "Artemisia capillaris",
+      "common": "expectorant and mildly antibiotic, and can be of"
+    },
+    {
+      "latin": "Arnica montana",
+      "common": ""
+    },
+    {
+      "latin": "Artemisia cina",
+      "common": "blood supply and accelerates healing. It is anti-"
+    },
+    {
+      "latin": "Artemisia vulgaris",
+      "common": "Tarragon"
+    },
+    {
+      "latin": "Bush                                                                                                           odoratum",
+      "common": "Description Variable shrub growing to 61⁄2 ft (2"
+    },
+    {
+      "latin": "Asparagus officinalis",
+      "common": ""
+    },
+    {
+      "latin": "Ballota nigra",
+      "common": ""
+    },
+    {
+      "latin": "Banisteriopsis caapi",
+      "common": "(Malpighiaceae)"
+    },
+    {
+      "latin": "Berberis vulgaris",
+      "common": "When used as a gargle or mouthwash, the"
+    },
+    {
+      "latin": "Beta vulgaris",
+      "common": ""
+    },
+    {
+      "latin": "Borago officinalis",
+      "common": ""
+    },
+    {
+      "latin": "Boswellia serrata",
+      "common": "treating malaria."
+    },
+    {
+      "latin": "Bixa orellana",
+      "common": ""
+    },
+    {
+      "latin": "Butea monosperma",
+      "common": "a counterfeit) for mandrake root (Mandragora"
+    },
+    {
+      "latin": "Calluna vulgaris",
+      "common": "Heather,"
+    },
+    {
+      "latin": "Cannabis sativa",
+      "common": "healthy supply of polyunsaturated fatty acids."
+    },
+    {
+      "latin": "Capparis spinosa",
+      "common": ""
+    },
+    {
+      "latin": "Carica papaya",
+      "common": "Caution Do not take during pregnancy."
+    },
+    {
+      "latin": "Castanea sativa",
+      "common": "“conducive to all the cold griefs of the head and"
+    },
+    {
+      "latin": "Carum carvi",
+      "common": ""
+    },
+    {
+      "latin": "Celtis australis",
+      "common": "or white flowers."
+    },
+    {
+      "latin": "Centaurea cyanus",
+      "common": ""
+    },
+    {
+      "latin": "Chamaelirium lutea",
+      "common": "Description Small shrub with a slender stem"
+    },
+    {
+      "latin": "Cetraria islandica",
+      "common": ""
+    },
+    {
+      "latin": "Ceratonia siliqua",
+      "common": ""
+    },
+    {
+      "latin": "Cheiranthus cheiri",
+      "common": ""
+    },
+    {
+      "latin": "Chimaphila umbellata",
+      "common": ""
+    },
+    {
+      "latin": "Chelone glabra",
+      "common": "(Chenopodiaceae)"
+    },
+    {
+      "latin": "Chionanthus virginicus",
+      "common": "used in the Americas as a digestive remedy, the"
+    },
+    {
+      "latin": "Cichorium intybus",
+      "common": ""
+    },
+    {
+      "latin": "Chondrus crispus",
+      "common": "Irish Moss,"
+    },
+    {
+      "latin": "Citrullus vulgaris",
+      "common": "evidence to show that chicory root protects the"
+    },
+    {
+      "latin": "Laurus camphora",
+      "common": "Bitter orange has"
+    },
+    {
+      "latin": "Citrus aurantium",
+      "common": ""
+    },
+    {
+      "latin": "Cochlearia officinalis",
+      "common": "(Asteraceae)"
+    },
+    {
+      "latin": "Cocos nucifera",
+      "common": "Coffee, native to East Africa, can be used to"
+    },
+    {
+      "latin": "Coffea arabica",
+      "common": "of 61.7 million tons. A coconut palm can produce"
+    },
+    {
+      "latin": "Cola acuminata",
+      "common": "muscle relaxant. Chlorogenic acids are anti-"
+    },
+    {
+      "latin": "Commiphora mukul",
+      "common": "Medicinal Actions & Uses Kola nut"
+    },
+    {
+      "latin": "Colchicum autumnale",
+      "common": "cholesterol levels."
+    },
+    {
+      "latin": "Convallaria majalis",
+      "common": "term to a cardiovascular problem, or to a chronic"
+    },
+    {
+      "latin": "Coptis chinensis",
+      "common": ""
+    },
+    {
+      "latin": "Coriandrum sativum",
+      "common": "Coriander,"
+    },
+    {
+      "latin": "Coptis trifolia",
+      "common": "Goldthread"
+    },
+    {
+      "latin": "Crithmum maritimum",
+      "common": ""
+    },
+    {
+      "latin": "Cornus officinalis",
+      "common": ""
+    },
+    {
+      "latin": "Cucurbita pepo",
+      "common": ""
+    },
+    {
+      "latin": "Cuminum cyminum",
+      "common": "History & Folklore The pumpkin has been"
+    },
+    {
+      "latin": "Cydonia oblonga",
+      "common": ""
+    },
+    {
+      "latin": "Datura stramonium",
+      "common": "alkaloids (particularly sparteine and lupanine),"
+    },
+    {
+      "latin": "Daucus carota",
+      "common": ""
+    },
+    {
+      "latin": "Digitalis lutea",
+      "common": "very slowly. Digoxin is therefore preferred as a"
+    },
+    {
+      "latin": "Dipsacus fullonum",
+      "common": ""
+    },
+    {
+      "latin": "Dorstenia contrajerva",
+      "common": ""
+    },
+    {
+      "latin": "Echium vulgare",
+      "common": "diarrhea and dysentery. There is no scientific"
+    },
+    {
+      "latin": "Embelia ribes",
+      "common": ""
+    },
+    {
+      "latin": "Emblica officinalis",
+      "common": "(Euphorbiaceae)"
+    },
+    {
+      "latin": "Entada phaseoloides",
+      "common": ""
+    },
+    {
+      "latin": "Equisetum arvense",
+      "common": ""
+    },
+    {
+      "latin": "Erythronium americanum",
+      "common": ""
+    },
+    {
+      "latin": "Erythrina variegata",
+      "common": ""
+    },
+    {
+      "latin": "Eucalyptus smithii",
+      "common": "Aymara and Quechua peoples. High altitudes,"
+    },
+    {
+      "latin": "Evodia rutaecarpa",
+      "common": ""
+    },
+    {
+      "latin": "Feronia limonia",
+      "common": "Eyebright, as its"
+    },
+    {
+      "latin": "Euterpe oleracea",
+      "common": ""
+    },
+    {
+      "latin": "Ficus benghalensis",
+      "common": "dung notwithstanding, the plant is thought to"
+    },
+    {
+      "latin": "Foeniculum vulgare",
+      "common": ""
+    },
+    {
+      "latin": "Forsythia suspensa",
+      "common": ""
+    },
+    {
+      "latin": "Ficus religiosa",
+      "common": ""
+    },
+    {
+      "latin": "Fumaria officinalis",
+      "common": ""
+    },
+    {
+      "latin": "Fucus vesiculosus",
+      "common": ""
+    },
+    {
+      "latin": "Galega officinalis",
+      "common": "other medicinal pl ants"
+    },
+    {
+      "latin": "Galium verum",
+      "common": "In South America, it is sometimes used as a"
+    },
+    {
+      "latin": "Galium aparine",
+      "common": ""
+    },
+    {
+      "latin": "Seaweed extract",
+      "common": ""
+    },
+    {
+      "latin": "Geum urbanum",
+      "common": "Has deeply cleft leaves, pink-purple flowers, and"
+    },
+    {
+      "latin": "Gossypium herbaceum",
+      "common": ""
+    },
+    {
+      "latin": "Glycine max",
+      "common": ""
+    },
+    {
+      "latin": "Hedera helix",
+      "common": "“sugar destroyer.”"
+    },
+    {
+      "latin": "Hibiscus sabdariffa",
+      "common": ""
+    },
+    {
+      "latin": "Hordeum vulgare",
+      "common": "improve resistance to infection. The"
+    },
+    {
+      "latin": "Hoodia gordonii",
+      "common": "(Elaeagnaceae)"
+    },
+    {
+      "latin": "Hyoscyamus niger",
+      "common": "Henbane"
+    },
+    {
+      "latin": "Hyssopus officinalis",
+      "common": ""
+    },
+    {
+      "latin": "Iris versicolor",
+      "common": "Medica of 1548 explains: “Masterwort powerfully"
+    },
+    {
+      "latin": "Jasminum grandiflorum",
+      "common": ""
+    },
+    {
+      "latin": "Krameria triandra",
+      "common": "be cytotoxic."
+    },
+    {
+      "latin": "Lactuca virosa",
+      "common": "Description Semi-deciduous tree growing to"
+    },
+    {
+      "latin": "Laurus nobilis",
+      "common": "and counters infection. A decoction of the bark"
+    },
+    {
+      "latin": "Larrea tridentata",
+      "common": ""
+    },
+    {
+      "latin": "Leonurus cardiaca",
+      "common": "for the same purposes as motherwort."
+    },
+    {
+      "latin": "Lepidium virginicum",
+      "common": "diluted in a carrier oil and massaged into aching"
+    },
+    {
+      "latin": "Lippia alba",
+      "common": ""
+    },
+    {
+      "latin": "Lomatium dissectum",
+      "common": ""
+    },
+    {
+      "latin": "Lophophora williamsii",
+      "common": ""
+    },
+    {
+      "latin": "Lycopus virginicus",
+      "common": ""
+    },
+    {
+      "latin": "Lythrum salicaria",
+      "common": "to treat heavy periods and for inter-menstrual"
+    },
+    {
+      "latin": "Lysimachia vulgaris",
+      "common": "Butter Tree"
+    },
+    {
+      "latin": "Malva sylvestris",
+      "common": "resembles the human form. The roots have been"
+    },
+    {
+      "latin": "Magnolia bark",
+      "common": "is aromatic, warming, and pungent. It relieves"
+    },
+    {
+      "latin": "Marrubium vulgare",
+      "common": "History & Folklore Bitter cassava has large"
+    },
+    {
+      "latin": "Medicago sativa",
+      "common": "most frequently taken as a syrup made with"
+    },
+    {
+      "latin": "Mentha haplocalyx",
+      "common": "Bo He (Chinese),"
+    },
+    {
+      "latin": "Mentha pulegium",
+      "common": ""
+    },
+    {
+      "latin": "Monsonia ovata",
+      "common": "berries, crushed and mixed with tincture of myrrh"
+    },
+    {
+      "latin": "Montia perfoliata",
+      "common": "sugar levels in the blood and urine."
+    },
+    {
+      "latin": "Morus alba",
+      "common": "potential uses. These include treating obesity,"
+    },
+    {
+      "latin": "Morinda officinalis",
+      "common": ""
+    },
+    {
+      "latin": "Murraya koenigii",
+      "common": ""
+    },
+    {
+      "latin": "Myrica gale",
+      "common": "southern Asia. It is widely cultivated in India"
+    },
+    {
+      "latin": "Myrica cerifera",
+      "common": ""
+    },
+    {
+      "latin": "Nepeta cataria",
+      "common": ""
+    },
+    {
+      "latin": "Myrtus communis",
+      "common": ""
+    },
+    {
+      "latin": "Nymphaea alba",
+      "common": ""
+    },
+    {
+      "latin": "Nicotiana tabacum",
+      "common": "leaves do cool all inflammations … the syrup"
+    },
+    {
+      "latin": "Nigella sativa",
+      "common": ""
+    },
+    {
+      "latin": "Olea europaea",
+      "common": ""
+    },
+    {
+      "latin": "Oenothera biennis",
+      "common": ""
+    },
+    {
+      "latin": "Ononis spinosa",
+      "common": "than its wild cousin. Sweet marjoram is a good"
+    },
+    {
+      "latin": "Origanum vulgare",
+      "common": ""
+    },
+    {
+      "latin": "Operculina turpethum",
+      "common": "(Convolvulaceae)"
+    },
+    {
+      "latin": "Panax quinquefolium",
+      "common": ""
+    },
+    {
+      "latin": "Papaver rhoeas",
+      "common": ""
+    },
+    {
+      "latin": "Peumus boldus",
+      "common": ""
+    },
+    {
+      "latin": "Petroselinum crispum",
+      "common": ""
+    },
+    {
+      "latin": "Phaseolus vulgaris",
+      "common": "coumarins (including bergapten), vitamins A, C,"
+    },
+    {
+      "latin": "Pfaffia paniculata",
+      "common": "Parsley was introduced to Britain in 1548."
+    },
+    {
+      "latin": "Piper angustifolia",
+      "common": "Seeds"
+    },
+    {
+      "latin": "Piper betle",
+      "common": "betel root, leaves, and fruit are sometimes used"
+    },
+    {
+      "latin": "Piper cubeba",
+      "common": "to use whole."
+    },
+    {
+      "latin": "Piscidia erythrina",
+      "common": ""
+    },
+    {
+      "latin": "Plantago major",
+      "common": "northern South America, and the Caribbean. It"
+    },
+    {
+      "latin": "Pistacia lentiscus",
+      "common": ""
+    },
+    {
+      "latin": "Polygala vulgaris",
+      "common": "American mandrake was much"
+    },
+    {
+      "latin": "Polygala senega",
+      "common": "podophyllotoxin appear to be the most promising,"
+    },
+    {
+      "latin": "Polymnia uvedalia",
+      "common": ""
+    },
+    {
+      "latin": "Pomaderris elliptica",
+      "common": ""
+    },
+    {
+      "latin": "Populus tremuloides",
+      "common": ""
+    },
+    {
+      "latin": "Portulaca oleracea",
+      "common": "in temperate regions. The bark is collected in"
+    },
+    {
+      "latin": "Potentilla anserina",
+      "common": ""
+    },
+    {
+      "latin": "Prunella vulgaris",
+      "common": "parts of tormentil are harvested in summer and"
+    },
+    {
+      "latin": "Prunus mume",
+      "common": "deep purple fruits."
+    },
+    {
+      "latin": "Prunus serotina",
+      "common": "bark contains tannins."
+    },
+    {
+      "latin": "Pterocarpus marsupium",
+      "common": "syn. P. thunbergiana (Fabaceae)"
+    },
+    {
+      "latin": "Psoralea corylifolia",
+      "common": ""
+    },
+    {
+      "latin": "Punica granatum",
+      "common": ""
+    },
+    {
+      "latin": "Pulmonaria officinalis",
+      "common": ""
+    },
+    {
+      "latin": "Quillaja saponaria",
+      "common": ""
+    },
+    {
+      "latin": "Quercus robur",
+      "common": "pomegranate has a strongly beneficial activity"
+    },
+    {
+      "latin": "Pygeum africanum",
+      "common": ""
+    },
+    {
+      "latin": "Raphanus sativus",
+      "common": ""
+    },
+    {
+      "latin": "Rhus glabra",
+      "common": "Smooth Sumac"
+    },
+    {
+      "latin": "Rubia tinctorum",
+      "common": ""
+    },
+    {
+      "latin": "Rosa canina",
+      "common": ""
+    },
+    {
+      "latin": "Rosa gallica",
+      "common": "areas. The fruit is picked in autumn."
+    },
+    {
+      "latin": "Rubus fruticosus",
+      "common": ""
+    },
+    {
+      "latin": "Rumex crispus",
+      "common": "used for washing and staunching wounds. Arching"
+    },
+    {
+      "latin": "Rubus idaeus",
+      "common": ""
+    },
+    {
+      "latin": "Salvia sclarea",
+      "common": ""
+    },
+    {
+      "latin": "Santalum album",
+      "common": "Sandalwood,"
+    },
+    {
+      "latin": "Poterium officinalis",
+      "common": ""
+    },
+    {
+      "latin": "Brown seaweed",
+      "common": "1.6% volatile oil, composed"
+    },
+    {
+      "latin": "Satureja montana",
+      "common": "physician, recommended soapwort as a treatment"
+    },
+    {
+      "latin": "Sesamum indicum",
+      "common": "History & Folklore The Frankish King"
+    },
+    {
+      "latin": "Packera aurea",
+      "common": "(Crassulaceae)"
+    },
+    {
+      "latin": "Solanum melongena",
+      "common": ""
+    },
+    {
+      "latin": "Solidago virgaurea",
+      "common": "(how precious soever it may be) than whilst"
+    },
+    {
+      "latin": "Sorbus aucuparia",
+      "common": ""
+    },
+    {
+      "latin": "Spigelia marilandica",
+      "common": ""
+    },
+    {
+      "latin": "Styrax benzoin",
+      "common": ""
+    },
+    {
+      "latin": "Stillingia sylvatica",
+      "common": ""
+    },
+    {
+      "latin": "Swertia chirata",
+      "common": "purgative, a treatment for skin eruptions,"
+    },
+    {
+      "latin": "Symplocarpus foetidus",
+      "common": ""
+    },
+    {
+      "latin": "Taxus baccata",
+      "common": ""
+    },
+    {
+      "latin": "Theobroma cacao",
+      "common": ""
+    },
+    {
+      "latin": "Thymus serpyllum",
+      "common": "cacao that have been investigated include the"
+    },
+    {
+      "latin": "Trifolium pratense",
+      "common": "Related Species See thyme (T. vulgaris, p. 143)."
+    },
+    {
+      "latin": "Tsuga canadensis",
+      "common": ""
+    },
+    {
+      "latin": "Trillium erectum",
+      "common": ""
+    },
+    {
+      "latin": "Tussilago farfara",
+      "common": "History & Folklore Various Trillium species"
+    },
+    {
+      "latin": "Tylophora asmatica",
+      "common": ""
+    },
+    {
+      "latin": "Typha angustifolia",
+      "common": "internal bleeding of almost any kind—for example,"
+    },
+    {
+      "latin": "Uncaria rhynchophylla",
+      "common": "that have a strongly tonic"
+    },
+    {
+      "latin": "Uncaria tomentosa",
+      "common": ""
+    },
+    {
+      "latin": "Drimia maritima",
+      "common": ""
+    }
+  ]
+}

@@ -8,6 +8,7 @@ export interface CartItem {
   quantity: number
   image?: string
   description?: string
+  metadata?: Record<string, string>
 }
 
 interface CartStore {

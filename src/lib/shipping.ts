@@ -83,16 +83,26 @@ export function extractVolumeFromProductName(productName: string): number {
   return 0
 }
 
-export function calculateShippingCost(items: Array<{ name: string; quantity: number }>): {
+export function calculateShippingCost(items: Array<{ name: string; quantity: number; metadata?: Record<string, string> }>): {
   cost: number
   description: string
   breakdown: string[]
+  canShip: boolean
+  restrictions: string[]
 } {
   let totalVolume = 0
   const breakdown: string[] = []
+  const restrictions: string[] = []
+  let canShip = true
   
-  // Calculate total volume from all items
+  // Check for glass products and calculate volume
   items.forEach(item => {
+    // Check if item has glass metadata
+    if (item.metadata?.glass === 'true') {
+      canShip = false
+      restrictions.push(`${item.name} contains glass and cannot be shipped`)
+    }
+    
     const volumePerItem = extractVolumeFromProductName(item.name)
     const totalItemVolume = volumePerItem * item.quantity
     totalVolume += totalItemVolume
@@ -101,6 +111,24 @@ export function calculateShippingCost(items: Array<{ name: string; quantity: num
       breakdown.push(`${item.name} × ${item.quantity} = ${totalItemVolume}mL`)
     }
   })
+  
+  // Check if total volume exceeds 5L (5000mL) shipping limit
+  if (totalVolume > 5000) {
+    canShip = false
+    restrictions.push(`Total volume ${(totalVolume / 1000).toFixed(1)}L exceeds 5L shipping limit`)
+  }
+  
+  // If shipping restrictions exist, return restriction info
+  if (!canShip) {
+    const restrictionReasons = restrictions.join('; ')
+    return {
+      cost: 0,
+      description: `Shipping not available - ${restrictionReasons}`,
+      breakdown,
+      canShip: false,
+      restrictions
+    }
+  }
   
   // Find appropriate shipping rate
   const applicableRate = SHIPPING_RATES.find(rate => 
@@ -114,13 +142,17 @@ export function calculateShippingCost(items: Array<{ name: string; quantity: num
       return {
         cost: 2630, // Use highest rate
         description: 'Over 5L (using 3.5L-5L rate)',
-        breakdown
+        breakdown,
+        canShip: true,
+        restrictions: []
       }
     } else if (totalVolume < 500) {
       return {
         cost: 0,
         description: 'Free shipping (under 500mL)',
-        breakdown
+        breakdown,
+        canShip: true,
+        restrictions: []
       }
     }
   }
@@ -128,7 +160,9 @@ export function calculateShippingCost(items: Array<{ name: string; quantity: num
   return {
     cost: applicableRate?.cost || 0,
     description: applicableRate?.description || 'Standard shipping',
-    breakdown
+    breakdown,
+    canShip: true,
+    restrictions: []
   }
 }
 

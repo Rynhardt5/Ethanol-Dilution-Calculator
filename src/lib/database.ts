@@ -307,7 +307,6 @@ export class HerbsDatabase {
     `;
 
     params.push(filters.limit, filters.offset);
-    
     const result = await db.query(searchQuery, params);
     return result.rows;
   }

@@ -6,10 +6,30 @@ CREATE TABLE herbs (
     id VARCHAR(255) PRIMARY KEY,
     common_name VARCHAR(255) NOT NULL,
     latin_name VARCHAR(255) NOT NULL,
+    alternative_name VARCHAR(255),
     family VARCHAR(255),
+    summary TEXT,
+    habitat TEXT,
+    parts_used TEXT,
+    related_species TEXT,
+    key_constituents JSONB,
+    history_folklore TEXT,
+    key_actions JSONB,
+    research JSONB,
+    traditional_uses JSONB,
+    current_uses JSONB,
+    preparations JSONB,
+    cautions TEXT,
+    therapeutic_categories JSONB,
     folk_uses TEXT,
     dosage TEXT,
     safety TEXT,
+    botanical_info JSONB,
+    specific_applications JSONB,
+    enhanced_preparations JSONB,
+    safety_contraindications JSONB,
+    drug_interactions JSONB,
+    pubmed_data JSONB,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -122,7 +142,12 @@ CREATE TABLE herb_tags (
 -- Indexes for fast searching
 CREATE INDEX idx_herbs_common_name ON herbs USING gin(to_tsvector('english', common_name));
 CREATE INDEX idx_herbs_latin_name ON herbs USING gin(to_tsvector('english', latin_name));
+CREATE INDEX idx_herbs_alternative_name ON herbs USING gin(to_tsvector('english', alternative_name));
 CREATE INDEX idx_herbs_family ON herbs(family);
+CREATE INDEX idx_herbs_summary ON herbs USING gin(to_tsvector('english', summary));
+CREATE INDEX idx_herbs_habitat ON herbs USING gin(to_tsvector('english', habitat));
+CREATE INDEX idx_herbs_history_folklore ON herbs USING gin(to_tsvector('english', history_folklore));
+CREATE INDEX idx_herbs_cautions ON herbs USING gin(to_tsvector('english', cautions));
 CREATE INDEX idx_herbs_folk_uses ON herbs USING gin(to_tsvector('english', folk_uses));
 
 CREATE INDEX idx_constituents_name ON constituents USING gin(to_tsvector('english', name));
@@ -138,7 +163,11 @@ CREATE INDEX idx_herbs_full_text ON herbs USING gin(
     to_tsvector('english', 
         coalesce(common_name, '') || ' ' || 
         coalesce(latin_name, '') || ' ' || 
+        coalesce(alternative_name, '') || ' ' || 
         coalesce(family, '') || ' ' || 
+        coalesce(summary, '') || ' ' || 
+        coalesce(habitat, '') || ' ' || 
+        coalesce(history_folklore, '') || ' ' || 
         coalesce(folk_uses, '')
     )
 );

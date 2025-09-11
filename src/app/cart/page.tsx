@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import { Minus, Plus, ShoppingCart, Trash2, CreditCard, Truck, MapPin } from 'lucide-react'
 import { useCartStore } from '@/lib/cart-store'
@@ -23,6 +24,16 @@ export default function CartPage() {
     ? getTotalPrice() + shippingInfo.cost 
     : getTotalPrice()
 
+  // Check if shipping is restricted
+  const hasShippingRestrictions = !shippingInfo.canShip
+
+  // Auto-switch to pickup if shipping is restricted
+  React.useEffect(() => {
+    if (hasShippingRestrictions && collectionMethod === 'shipping') {
+      setCollectionMethod('pickup')
+    }
+  }, [hasShippingRestrictions, collectionMethod])
+
   // Calculate shipping based on cart items
 
   const handleQuantityChange = (id: string, newQuantity: number) => {
@@ -36,6 +47,12 @@ export default function CartPage() {
   const handleCheckout = async () => {
     if (items.length === 0) {
       toast.error('Your cart is empty')
+      return
+    }
+
+    // Check if shipping is selected but restricted
+    if (collectionMethod === 'shipping' && hasShippingRestrictions) {
+      toast.error('Cannot ship items containing glass. Please select pickup instead.')
       return
     }
 
@@ -135,6 +152,13 @@ export default function CartPage() {
                           {item.description}
                         </p>
                       )}
+                      {item.metadata?.glass === 'true' && (
+                        <div className="flex items-center gap-1 mt-1">
+                          <Badge variant="destructive" className="text-xs">
+                            Contains Glass - Pickup Only
+                          </Badge>
+                        </div>
+                      )}
                       <p className="text-lg font-bold text-primary">
                         ${(item.price / 100).toFixed(2)}
                       </p>
@@ -189,6 +213,21 @@ export default function CartPage() {
                 <div className="space-y-3">
                   <Label className="text-base font-medium">How would you like to receive your order?</Label>
                   
+                  {hasShippingRestrictions && (
+                    <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
+                      <div className="flex items-center gap-2 text-destructive text-sm font-medium">
+                        <Truck className="h-4 w-4" />
+                        Shipping Restriction
+                      </div>
+                      <div className="text-sm text-muted-foreground mt-1">
+                        {shippingInfo.restrictions.map((restriction, index) => (
+                          <p key={index}>• {restriction}</p>
+                        ))}
+                        <p className="mt-1 font-medium">Please select pickup instead.</p>
+                      </div>
+                    </div>
+                  )}
+                  
                   <div className="space-y-2">
                     <div 
                       className={`border rounded-lg p-3 cursor-pointer transition-colors ${
@@ -208,18 +247,22 @@ export default function CartPage() {
                     </div>
                     
                     <div 
-                      className={`border rounded-lg p-3 cursor-pointer transition-colors ${
-                        collectionMethod === 'shipping' 
-                          ? 'border-primary bg-primary/5' 
-                          : 'border-border hover:border-primary/50'
+                      className={`border rounded-lg p-3 transition-colors ${
+                        hasShippingRestrictions 
+                          ? 'border-destructive/50 bg-destructive/5 cursor-not-allowed opacity-60'
+                          : collectionMethod === 'shipping' 
+                            ? 'border-primary bg-primary/5 cursor-pointer' 
+                            : 'border-border hover:border-primary/50 cursor-pointer'
                       }`}
-                      onClick={() => setCollectionMethod('shipping')}
+                      onClick={() => !hasShippingRestrictions && setCollectionMethod('shipping')}
                     >
                       <div className="flex items-center gap-3">
-                        <Truck className="h-5 w-5 text-primary" />
+                        <Truck className={`h-5 w-5 ${hasShippingRestrictions ? 'text-destructive' : 'text-primary'}`} />
                         <div>
                           <div className="font-medium">Ship to Address</div>
-                          <div className="text-sm text-muted-foreground">Delivery to your address</div>
+                          <div className="text-sm text-muted-foreground">
+                            {hasShippingRestrictions ? 'Not available - see restrictions above' : 'Delivery to your address'}
+                          </div>
                         </div>
                       </div>
                     </div>

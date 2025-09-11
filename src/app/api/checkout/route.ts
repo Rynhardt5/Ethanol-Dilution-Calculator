@@ -1,5 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe'
+import { extractVolumeFromProductName } from '@/lib/shipping'
+
+interface CartItem {
+  id: string
+  name: string
+  price: number
+  quantity: number
+  metadata?: Record<string, string>
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -9,11 +18,30 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No items provided' }, { status: 400 })
     }
 
-    interface CartItem {
-      id: string
-      name: string
-      price: number
-      quantity: number
+    // Check for shipping restrictions when shipping is selected
+    if (collectionMethod === 'shipping') {
+      // Check for glass products
+      const hasGlassProducts = items.some((item: CartItem) => item.metadata?.glass === 'true')
+      if (hasGlassProducts) {
+        return NextResponse.json(
+          { error: 'Cannot ship items containing glass. Please select pickup instead.' },
+          { status: 400 }
+        )
+      }
+
+      // Check for volume limit (5L = 5000mL)
+      let totalVolume = 0
+      items.forEach((item: CartItem) => {
+        const volumePerItem = extractVolumeFromProductName(item.name)
+        totalVolume += volumePerItem * item.quantity
+      })
+
+      if (totalVolume > 5000) {
+        return NextResponse.json(
+          { error: `Total volume ${(totalVolume / 1000).toFixed(1)}L exceeds 5L shipping limit. Please select pickup instead.` },
+          { status: 400 }
+        )
+      }
     }
 
     // Create line items for Stripe

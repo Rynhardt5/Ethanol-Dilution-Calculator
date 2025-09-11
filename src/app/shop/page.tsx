@@ -57,6 +57,7 @@ export default function ShopPage() {
       price: product.price,
       image: product.images[0],
       description: product.description || undefined,
+      metadata: product.metadata,
     })
     toast.success(`${product.name} added to cart!`)
   }
@@ -133,7 +134,7 @@ export default function ShopPage() {
                     </div>
 
                     {/* Metadata badges */}
-                    {Object.entries(product.metadata).length > 0 && (
+                    {/* {Object.entries(product.metadata).length > 0 && (
                       <div className="flex flex-wrap gap-2">
                         {Object.entries(product.metadata).map(
                           ([key, value]) => (
@@ -147,7 +148,7 @@ export default function ShopPage() {
                           )
                         )}
                       </div>
-                    )}
+                    )} */}
 
                     <div className="flex items-center justify-between">
                       <div className="text-2xl font-bold text-primary">
