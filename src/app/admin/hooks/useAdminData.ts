@@ -50,7 +50,7 @@ export function useAdminData() {
 
   const fetchStripeOrders = useCallback(async () => {
     try {
-      const response = await fetch('/api/admin/stripe-orders')
+      const response = await fetch('/api/admin/orders')
       if (!response.ok) {
         throw new Error('Failed to fetch Stripe orders')
       }

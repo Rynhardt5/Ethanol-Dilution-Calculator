@@ -16,6 +16,8 @@ export async function GET() {
     )
 
     const orders = await gistStorage.getOrders()
+    console.log('Fetched orders from Gist:', orders.length, 'orders')
+    console.log('Order IDs:', orders.map(o => o.id))
     return NextResponse.json(orders)
   } catch (error) {
     console.error('Error fetching orders:', error)
