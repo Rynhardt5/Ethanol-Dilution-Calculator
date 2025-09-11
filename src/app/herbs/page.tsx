@@ -97,10 +97,21 @@ interface EnrichedData {
     ethanolPercentage: number
     description: string
   }>
-  botanicalInfo?: any
+  botanicalInfo?: {
+    habitat?: string
+    cultivation?: string
+    description?: string
+    family?: string
+    duration?: string
+    growthHabit?: string
+  }
   contraindications?: string[]
   interactions?: string[]
-  scientificEvidence: any[]
+  scientificEvidence: {
+    title?: string
+    summary?: string
+    source?: string
+  }[]
 }
 
 export default function HerbsPage() {
@@ -112,7 +123,7 @@ export default function HerbsPage() {
   const [loading, setLoading] = useState(true)
   const [searchLoading, setSearchLoading] = useState(false)
   const [selectedHerb, setSelectedHerb] = useState<Herb | null>(null)
-  const [enrichedData, setEnrichedData] = useState<any>(null)
+  const [enrichedData, setEnrichedData] = useState<EnrichedData | null>(null)
   const [enrichmentLoading, setEnrichmentLoading] = useState(false)
   const [showDebug, setShowDebug] = useState(false)
   const [pagination, setPagination] = useState({
@@ -951,7 +962,7 @@ export default function HerbsPage() {
                             Preparations
                           </h4>
                           <div className="space-y-3">
-                            {enrichedData.preparations.map((prep, index) => (
+                            {enrichedData.preparations.map((prep: { type: string; method: string; dosage?: string; notes?: string }, index: number) => (
                               <div
                                 key={index}
                                 className="border rounded-lg p-3 bg-gray-50"
@@ -985,7 +996,7 @@ export default function HerbsPage() {
                               </h4>
                               <div className="space-y-2">
                                 {enrichedData.constituents.map(
-                                  (compound, index) => (
+                                  (compound: { name: string; type: string; ethanolPercentage: number; description: string }, index: number) => (
                                     <div
                                       key={index}
                                       className="border rounded-lg p-3 bg-purple-50"
@@ -1064,7 +1075,7 @@ export default function HerbsPage() {
                               <div className="bg-red-50 p-3 rounded-lg">
                                 <ul className="text-sm text-red-700 space-y-1">
                                   {enrichedData.contraindications.map(
-                                    (item, index) => (
+                                    (item: string, index: number) => (
                                       <li
                                         key={index}
                                         className="flex items-start gap-2"
@@ -1090,7 +1101,7 @@ export default function HerbsPage() {
                               <div className="bg-orange-50 p-3 rounded-lg">
                                 <ul className="text-sm text-orange-700 space-y-1">
                                   {enrichedData.interactions.map(
-                                    (item, index) => (
+                                    (item: string, index: number) => (
                                       <li
                                         key={index}
                                         className="flex items-start gap-2"
