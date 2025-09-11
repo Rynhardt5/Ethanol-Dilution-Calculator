@@ -68,14 +68,21 @@ export async function POST(request: NextRequest) {
         createdAt: new Date().toISOString(),
         collectionMethod: (session.metadata?.collectionMethod as 'pickup' | 'shipping') || 'shipping',
         shippingCost: session.metadata?.shippingCost ? parseInt(session.metadata.shippingCost) : undefined,
-        shippingAddress: session.shipping_details?.address ? {
-          line1: session.shipping_details.address.line1 || '',
-          line2: session.shipping_details.address.line2 || undefined,
-          city: session.shipping_details.address.city || '',
-          state: session.shipping_details.address.state || '',
-          postal_code: session.shipping_details.address.postal_code || '',
-          country: session.shipping_details.address.country || 'AU'
-        } : undefined
+        shippingAddress: (() => {
+          const sessionData = session as any
+          if (sessionData.shipping_details?.address) {
+            const addr = sessionData.shipping_details.address
+            return {
+              line1: addr.line1 || '',
+              line2: addr.line2 || undefined,
+              city: addr.city || '',
+              state: addr.state || '',
+              postal_code: addr.postal_code || '',
+              country: addr.country || 'AU'
+            }
+          }
+          return undefined
+        })()
       }
 
       // Save to GitHub Gist

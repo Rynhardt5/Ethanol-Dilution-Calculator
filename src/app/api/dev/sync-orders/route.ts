@@ -82,8 +82,9 @@ export async function POST() {
         customerPhone = matchingSession.customer_details.phone || ''
         
         // Get shipping address from checkout session
-        if ((matchingSession as any).shipping_details?.address) {
-          const shippingAddr = (matchingSession as any).shipping_details.address
+        const sessionData = matchingSession as any
+        if (sessionData.shipping_details?.address) {
+          const shippingAddr = sessionData.shipping_details.address
           shippingAddress = {
             line1: shippingAddr.line1 || '',
             line2: shippingAddr.line2 || undefined,
@@ -204,15 +205,16 @@ export async function POST() {
       let collectionMethod: 'pickup' | 'shipping' = 'pickup'
       
       // Check for shipping cost in checkout session first (primary method)
-      if (matchingSession && (matchingSession as any).shipping_cost?.amount_total) {
-        shippingCost = (matchingSession as any).shipping_cost.amount_total
+      const sessionData = matchingSession as any
+      if (sessionData?.shipping_cost?.amount_total) {
+        shippingCost = sessionData.shipping_cost.amount_total
         if (shippingCost > 0) {
           collectionMethod = 'shipping'
         }
       }
       // Also check for shipping in total_details as backup
-      else if (matchingSession && (matchingSession as any).total_details?.amount_shipping) {
-        shippingCost = (matchingSession as any).total_details.amount_shipping
+      else if (sessionData?.total_details?.amount_shipping) {
+        shippingCost = sessionData.total_details.amount_shipping
         if (shippingCost > 0) {
           collectionMethod = 'shipping'
         }
