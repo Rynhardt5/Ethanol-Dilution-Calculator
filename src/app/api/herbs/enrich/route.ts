@@ -15,13 +15,13 @@ export async function POST(request: NextRequest) {
     }
 
     // Get full herb data from database if ID provided
-    let herbData = {
+    const herbData = {
       id,
       common_name,
       latin_name,
       medicinal_actions: medicinal_actions || [],
-      family: null,
-      botanical_info: null,
+      family: undefined,
+      botanical_info: undefined,
     }
 
     if (id) {
