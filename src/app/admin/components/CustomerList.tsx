@@ -51,7 +51,7 @@ interface CustomerListProps {
   fetchStripeOrders: () => Promise<StripeOrder[]>
 }
 
-export function CustomerList({ customers, orders, onRefresh, onRefundOrder, fetchStripeOrders }: CustomerListProps) {
+export function CustomerList({ customers, orders: _orders, onRefresh, onRefundOrder, fetchStripeOrders }: CustomerListProps) {
   const [stripeOrders, setStripeOrders] = useState<StripeOrder[]>([])
   const [searchQuery, setSearchQuery] = useState('')
   const [sortField, setSortField] = useState<'name' | 'email' | 'created' | 'totalSpent' | 'orderCount'>('created')

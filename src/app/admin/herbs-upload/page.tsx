@@ -39,7 +39,7 @@ export default function HerbsUploadPage() {
         // Refresh gist status after successful upload
         await checkGistStatus()
       }
-    } catch (error) {
+    } catch (_error) {
       setUploadResult({
         success: false,
         message: 'Failed to upload herbs data'

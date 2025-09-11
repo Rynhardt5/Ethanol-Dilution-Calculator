@@ -3,7 +3,7 @@ import { GitHubGistStorage } from '@/lib/github-gist'
 import fs from 'fs/promises'
 import path from 'path'
 
-export async function POST(request: NextRequest) {
+export async function POST(_request: NextRequest) {
   try {
     // Get environment variables
     const gistId = process.env.GITHUB_GIST_ID

@@ -9,7 +9,6 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { ShoppingCart, Loader2 } from 'lucide-react'
 import { useCartStore } from '@/lib/cart-store'
 import { toast } from 'sonner'
