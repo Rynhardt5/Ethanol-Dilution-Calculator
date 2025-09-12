@@ -21,7 +21,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid signature' }, { status: 400 })
   }
 
-  // Handle the checkout.session.completed event
+  console.log(`🔔 Webhook received: ${event.type} [${event.id}]`)
+
+  // Only handle checkout.session.completed events to avoid duplicate order creation
+  // charge.updated events are ignored as they don't contain complete order information
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session
 
@@ -52,7 +55,7 @@ export async function POST(request: NextRequest) {
 
       // Create order object for Gist
       const order: Order = {
-        id: paymentIntent.id,
+        id: paymentIntent.id, // Use payment intent ID consistently
         customerEmail: session.customer_details?.email || '',
         customerName: session.customer_details?.name || 'Guest Customer',
         customerPhone: session.customer_details?.phone || undefined,
@@ -102,6 +105,9 @@ export async function POST(request: NextRequest) {
       console.error('Error processing webhook:', error)
       return NextResponse.json({ error: 'Webhook processing failed' }, { status: 500 })
     }
+  } else {
+    // Log other webhook events but don't process them
+    console.log(`ℹ️  Ignoring webhook event: ${event.type}`)
   }
 
   return NextResponse.json({ received: true })

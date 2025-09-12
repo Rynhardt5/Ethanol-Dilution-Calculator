@@ -111,15 +111,24 @@ export class GitHubGistStorage {
   async saveOrder(order: Order): Promise<void> {
     const orders = await this.getOrders()
     
-    // Check if order already exists
-    const existingIndex = orders.findIndex(o => o.id === order.id)
+    // Check if order already exists by ID or paymentIntentId to prevent duplicates
+    const existingIndex = orders.findIndex(o => 
+      o.id === order.id || 
+      (o.paymentIntentId && order.paymentIntentId && o.paymentIntentId === order.paymentIntentId)
+    )
     
     if (existingIndex >= 0) {
-      // Update existing order
-      orders[existingIndex] = order
+      // Update existing order, keeping the original ID
+      const existingOrder = orders[existingIndex]
+      orders[existingIndex] = {
+        ...order,
+        id: existingOrder.id // Preserve the original ID to maintain consistency
+      }
+      console.log(`📝 Updated existing order: ${existingOrder.id} (paymentIntent: ${order.paymentIntentId})`)
     } else {
       // Add new order
       orders.push(order)
+      console.log(`➕ Added new order: ${order.id} (paymentIntent: ${order.paymentIntentId})`)
     }
 
     await this.saveOrdersBatch(orders)
