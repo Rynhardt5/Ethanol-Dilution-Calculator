@@ -1,5 +1,5 @@
 // Shipping cost calculation for Australia wide delivery
-// Based on volume ranges: 500mL-1L ($18.25), 1.5L-3L ($23.30), 3.5L-5L ($26.30)
+// Based on volume ranges: 500mL-1L ($15.25), 1.5L-3L ($23.30), 3.5L-5L ($26.30)
 
 export interface ShippingRate {
   minVolume: number // in mL
@@ -12,7 +12,7 @@ export const SHIPPING_RATES: ShippingRate[] = [
   {
     minVolume: 500,
     maxVolume: 1000,
-    cost: 1825, // $18.25 in cents
+    cost: 1525, // $15.25 in cents
     description: '500mL - 1L'
   },
   {
