@@ -10,20 +10,22 @@ export async function GET() {
       expand: ['data.default_price'],
     })
 
-    // Transform Stripe products to our format
-    const transformedProducts = products.data.map((product) => {
-      const price = product.default_price as Stripe.Price | null
-      
-      return {
-        id: product.id,
-        name: product.name,
-        description: product.description,
-        images: product.images,
-        price: price?.unit_amount || 0,
-        currency: price?.currency || 'aud',
-        metadata: product.metadata,
-      }
-    })
+    // Transform Stripe products to our format and filter by metadata.shop = "true"
+    const transformedProducts = products.data
+      .filter((product) => product.metadata?.shop === 'true')
+      .map((product) => {
+        const price = product.default_price as Stripe.Price | null
+
+        return {
+          id: product.id,
+          name: product.name,
+          description: product.description,
+          images: product.images,
+          price: price?.unit_amount || 0,
+          currency: price?.currency || 'aud',
+          metadata: product.metadata,
+        }
+      })
 
     return NextResponse.json(transformedProducts)
   } catch (error) {
