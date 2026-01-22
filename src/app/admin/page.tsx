@@ -29,13 +29,14 @@ import { StatsCards } from './components/StatsCards'
 import { AdminSidebar, MobileHeader } from './components/AdminSidebar'
 import { CustomerList } from './components/CustomerList'
 import { ProductList } from './components/ProductList'
+import { PromoCodeList } from './components/PromoCodeList'
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(true)
   const [password, setPassword] = useState('')
   const [loginAttempting, setLoginAttempting] = useState(false)
   const [activeSection, setActiveSection] = useState<
-    'orders' | 'customers' | 'products'
+    'orders' | 'customers' | 'products' | 'promo-codes'
   >('orders')
   const [activeTab, setActiveTab] = useState<'pending' | 'completed'>('pending')
   const [searchQuery, setSearchQuery] = useState('')
@@ -273,6 +274,8 @@ export default function AdminPage() {
           {activeSection === 'products' && (
             <ProductList products={products} onRefresh={fetchData} />
           )}
+
+          {activeSection === 'promo-codes' && <PromoCodeList />}
         </div>
       </div>
     </div>

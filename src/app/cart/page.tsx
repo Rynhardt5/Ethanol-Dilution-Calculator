@@ -13,6 +13,9 @@ import {
   CreditCard,
   Truck,
   MapPin,
+  Tag,
+  X,
+  Loader2,
 } from 'lucide-react'
 import { useCartStore } from '@/lib/cart-store'
 import { toast } from 'sonner'
@@ -28,13 +31,24 @@ export default function CartPage() {
   const [collectionMethod, setCollectionMethod] = useState<
     'pickup' | 'shipping'
   >('shipping')
+  const [promoCode, setPromoCode] = useState('')
+  const [appliedPromoCode, setAppliedPromoCode] = useState<{
+    code: string
+    discountPercentage: number
+  } | null>(null)
+  const [validatingPromo, setValidatingPromo] = useState(false)
 
   // Calculate shipping cost
   const shippingInfo = calculateShippingCost(items)
+  const subtotal = getTotalPrice()
+  const discount = appliedPromoCode
+    ? Math.round(subtotal * (appliedPromoCode.discountPercentage / 100))
+    : 0
+  const totalAfterDiscount = subtotal - discount
   const totalWithShipping =
     collectionMethod === 'shipping'
-      ? getTotalPrice() + shippingInfo.cost
-      : getTotalPrice()
+      ? totalAfterDiscount + shippingInfo.cost
+      : totalAfterDiscount
 
   // Check if shipping is restricted
   const hasShippingRestrictions = !shippingInfo.canShip
@@ -56,6 +70,45 @@ export default function CartPage() {
     updateQuantity(id, newQuantity)
   }
 
+  const handleApplyPromoCode = async () => {
+    if (!promoCode.trim()) {
+      toast.error('Please enter a promo code')
+      return
+    }
+
+    setValidatingPromo(true)
+    try {
+      const response = await fetch('/api/promo-codes/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: promoCode }),
+      })
+
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.error || 'Invalid promo code')
+      }
+
+      const data = await response.json()
+      setAppliedPromoCode({
+        code: data.code,
+        discountPercentage: data.discountPercentage,
+      })
+      toast.success(`Promo code applied! ${data.discountPercentage}% off`)
+      setPromoCode('')
+    } catch (error) {
+      console.error('Promo code error:', error)
+      toast.error(error instanceof Error ? error.message : 'Invalid promo code')
+    } finally {
+      setValidatingPromo(false)
+    }
+  }
+
+  const handleRemovePromoCode = () => {
+    setAppliedPromoCode(null)
+    toast.success('Promo code removed')
+  }
+
   const handleCheckout = async () => {
     if (items.length === 0) {
       toast.error('Your cart is empty')
@@ -65,7 +118,7 @@ export default function CartPage() {
     // Check if shipping is selected but restricted
     if (collectionMethod === 'shipping' && hasShippingRestrictions) {
       toast.error(
-        'Cannot ship items containing glass. Please select pickup instead.'
+        'Cannot ship items containing glass. Please select pickup instead.',
       )
       return
     }
@@ -86,6 +139,8 @@ export default function CartPage() {
           })),
           collectionMethod,
           shippingCost: collectionMethod === 'shipping' ? shippingInfo.cost : 0,
+          promoCode: appliedPromoCode?.code,
+          discountAmount: discount,
         }),
       })
 
@@ -205,7 +260,7 @@ export default function CartPage() {
                           onChange={(e) =>
                             handleQuantityChange(
                               item.id,
-                              parseInt(e.target.value) || 1
+                              parseInt(e.target.value) || 1,
                             )
                           }
                           className="w-14 h-8 text-center text-sm"
@@ -247,7 +302,9 @@ export default function CartPage() {
           <div className="space-y-4 w-full min-w-0">
             <Card className="overflow-hidden">
               <CardHeader className="pb-3">
-                <CardTitle className="text-base sm:text-lg">Collection Method</CardTitle>
+                <CardTitle className="text-base sm:text-lg">
+                  Collection Method
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4 p-3 sm:p-6 pt-0 overflow-hidden">
                 <div className="space-y-3">
@@ -284,7 +341,9 @@ export default function CartPage() {
                       <div className="flex items-center gap-3">
                         <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
                         <div className="min-w-0">
-                          <div className="font-medium text-sm sm:text-base">Collect in Person</div>
+                          <div className="font-medium text-sm sm:text-base">
+                            Collect in Person
+                          </div>
                           <div className="text-xs sm:text-sm text-muted-foreground">
                             Pick up from our location
                           </div>
@@ -297,8 +356,8 @@ export default function CartPage() {
                         hasShippingRestrictions
                           ? 'border-destructive/50 bg-destructive/5 cursor-not-allowed opacity-60'
                           : collectionMethod === 'shipping'
-                          ? 'border-primary bg-primary/5 cursor-pointer'
-                          : 'border-border hover:border-primary/50 cursor-pointer'
+                            ? 'border-primary bg-primary/5 cursor-pointer'
+                            : 'border-border hover:border-primary/50 cursor-pointer'
                       }`}
                       onClick={() =>
                         !hasShippingRestrictions &&
@@ -314,7 +373,9 @@ export default function CartPage() {
                           }`}
                         />
                         <div className="min-w-0">
-                          <div className="font-medium text-sm sm:text-base">Ship to Address</div>
+                          <div className="font-medium text-sm sm:text-base">
+                            Ship to Address
+                          </div>
                           <div className="text-xs sm:text-sm text-muted-foreground">
                             {hasShippingRestrictions
                               ? 'Not available - see restrictions above'
@@ -330,14 +391,20 @@ export default function CartPage() {
 
             <Card className="overflow-hidden">
               <CardHeader className="pb-3">
-                <CardTitle className="text-base sm:text-lg">Order Summary</CardTitle>
+                <CardTitle className="text-base sm:text-lg">
+                  Order Summary
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4 p-3 sm:p-6 pt-0 overflow-hidden">
                 <div className="space-y-2">
                   {items.map((item) => (
-                    <div key={item.id} className="flex justify-between gap-2 text-sm">
+                    <div
+                      key={item.id}
+                      className="flex justify-between gap-2 text-sm"
+                    >
                       <span className="truncate min-w-0 flex-1">
-                        <span className="break-words">{item.name}</span> × {item.quantity}
+                        <span className="break-words">{item.name}</span> ×{' '}
+                        {item.quantity}
                       </span>
                       <span className="flex-shrink-0 font-medium">
                         ${((item.price * item.quantity) / 100).toFixed(2)}
@@ -348,17 +415,55 @@ export default function CartPage() {
 
                 <Separator />
 
-                {collectionMethod === 'shipping' && (
+                {appliedPromoCode && (
                   <>
                     <div className="flex justify-between gap-2 text-sm">
                       <span>Subtotal</span>
                       <span className="flex-shrink-0 font-medium">
-                        ${(getTotalPrice() / 100).toFixed(2)}
+                        ${(subtotal / 100).toFixed(2)}
                       </span>
                     </div>
+                    <div className="flex justify-between items-center gap-2">
+                      <div className="flex items-center gap-2">
+                        <Tag className="h-4 w-4 text-green-600" />
+                        <span className="text-sm text-green-600 font-medium">
+                          {appliedPromoCode.code} (-
+                          {appliedPromoCode.discountPercentage}%)
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="flex-shrink-0 font-medium text-green-600">
+                          -${(discount / 100).toFixed(2)}
+                        </span>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={handleRemovePromoCode}
+                          className="h-6 w-6 p-0"
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    </div>
+                    <Separator />
+                  </>
+                )}
+
+                {collectionMethod === 'shipping' && (
+                  <>
+                    {!appliedPromoCode && (
+                      <div className="flex justify-between gap-2 text-sm">
+                        <span>Subtotal</span>
+                        <span className="flex-shrink-0 font-medium">
+                          ${(getTotalPrice() / 100).toFixed(2)}
+                        </span>
+                      </div>
+                    )}
                     <div className="flex justify-between gap-2 text-sm">
                       <span className="min-w-0 flex-1">
-                        <span className="break-words">Shipping ({shippingInfo.description})</span>
+                        <span className="break-words">
+                          Shipping ({shippingInfo.description})
+                        </span>
                       </span>
                       <span className="flex-shrink-0 font-medium">
                         {shippingInfo.cost === 0
@@ -386,6 +491,42 @@ export default function CartPage() {
                     ${(totalWithShipping / 100).toFixed(2)}
                   </span>
                 </div>
+
+                {!appliedPromoCode && (
+                  <div className="space-y-2">
+                    <Label htmlFor="promoCode" className="text-sm font-medium">
+                      Have a promo code?
+                    </Label>
+                    <div className="flex gap-2">
+                      <Input
+                        id="promoCode"
+                        value={promoCode}
+                        onChange={(e) =>
+                          setPromoCode(e.target.value.toUpperCase())
+                        }
+                        placeholder="Enter code"
+                        className="flex-1"
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault()
+                            handleApplyPromoCode()
+                          }
+                        }}
+                      />
+                      <Button
+                        onClick={handleApplyPromoCode}
+                        disabled={validatingPromo || !promoCode.trim()}
+                        variant="outline"
+                      >
+                        {validatingPromo ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          'Apply'
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+                )}
 
                 <Button
                   onClick={handleCheckout}

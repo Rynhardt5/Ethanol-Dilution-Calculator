@@ -1,12 +1,14 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { Package, Users, X, Menu, ShoppingCart } from 'lucide-react'
+import { Package, Users, X, Menu, ShoppingCart, Ticket } from 'lucide-react'
 
 interface AdminSidebarProps {
-  activeSection: 'orders' | 'customers' | 'products'
+  activeSection: 'orders' | 'customers' | 'products' | 'promo-codes'
   sidebarOpen: boolean
-  onSectionChange?: (section: 'orders' | 'customers' | 'products') => void
+  onSectionChange?: (
+    section: 'orders' | 'customers' | 'products' | 'promo-codes',
+  ) => void
   onToggleSidebar?: () => void
 }
 
@@ -82,6 +84,17 @@ export function AdminSidebar({
               <Package className="mr-3 h-5 w-5" />
               Products
             </button>
+            <button
+              onClick={() => onSectionChange?.('promo-codes')}
+              className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                activeSection === 'promo-codes'
+                  ? 'bg-blue-100 text-blue-700'
+                  : 'text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              <Ticket className="mr-3 h-5 w-5" />
+              Promo Codes
+            </button>
           </nav>
         </div>
       </div>
@@ -93,7 +106,7 @@ export function MobileHeader({
   activeSection,
   onToggleSidebar,
 }: {
-  activeSection: 'orders' | 'customers' | 'products'
+  activeSection: 'orders' | 'customers' | 'products' | 'promo-codes'
   onToggleSidebar?: () => void
 }) {
   return (
@@ -102,8 +115,13 @@ export function MobileHeader({
         <Menu className="h-5 w-5" />
       </Button>
       <h1 className="text-lg font-semibold">
-        {activeSection === 'orders' ? 'Orders' : 
-         activeSection === 'customers' ? 'Customers' : 'Products'}
+        {activeSection === 'orders'
+          ? 'Orders'
+          : activeSection === 'customers'
+            ? 'Customers'
+            : activeSection === 'products'
+              ? 'Products'
+              : 'Promo Codes'}
       </h1>
       <div className="w-10" />
     </div>
