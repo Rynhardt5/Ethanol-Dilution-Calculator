@@ -1,20 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { GitHubGistStorage, PromoCode } from '@/lib/github-gist'
 
-export interface PromoCode {
-  id: string
-  code: string
-  discountPercentage: number
-  active: boolean
-  createdAt: string
-  usageCount: number
-  maxUsages?: number
-  expiresAt?: string
+function getGistStorage() {
+  if (!process.env.GITHUB_GIST_ID || !process.env.GITHUB_TOKEN) {
+    throw new Error('GitHub Gist configuration not found')
+  }
+  return new GitHubGistStorage(process.env.GITHUB_GIST_ID, process.env.GITHUB_TOKEN)
 }
 
-const promoCodes: PromoCode[] = []
-
 export async function GET() {
-  return NextResponse.json({ promoCodes })
+  try {
+    const gistStorage = getGistStorage()
+    const promoCodes = await gistStorage.getPromoCodes()
+    return NextResponse.json({ promoCodes })
+  } catch (error) {
+    console.error('Error fetching promo codes:', error)
+    return NextResponse.json(
+      { error: 'Failed to fetch promo codes' },
+      { status: 500 }
+    )
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -37,6 +42,8 @@ export async function POST(request: NextRequest) {
     }
 
     const normalizedCode = code.toUpperCase().trim()
+    const gistStorage = getGistStorage()
+    const promoCodes = await gistStorage.getPromoCodes()
 
     if (promoCodes.some((pc) => pc.code === normalizedCode)) {
       return NextResponse.json(
@@ -56,7 +63,7 @@ export async function POST(request: NextRequest) {
       expiresAt,
     }
 
-    promoCodes.push(newPromoCode)
+    await gistStorage.savePromoCode(newPromoCode)
 
     return NextResponse.json({ promoCode: newPromoCode }, { status: 201 })
   } catch (error) {
@@ -71,6 +78,8 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const { id, active } = await request.json()
+    const gistStorage = getGistStorage()
+    const promoCodes = await gistStorage.getPromoCodes()
 
     const promoCode = promoCodes.find((pc) => pc.id === id)
 
@@ -81,6 +90,7 @@ export async function PUT(request: NextRequest) {
       )
     }
 
+    await gistStorage.updatePromoCodeStatus(id, active)
     promoCode.active = active
 
     return NextResponse.json({ promoCode })
@@ -105,6 +115,9 @@ export async function DELETE(request: NextRequest) {
       )
     }
 
+    const gistStorage = getGistStorage()
+    const promoCodes = await gistStorage.getPromoCodes()
+
     const index = promoCodes.findIndex((pc) => pc.id === id)
 
     if (index === -1) {
@@ -114,7 +127,7 @@ export async function DELETE(request: NextRequest) {
       )
     }
 
-    promoCodes.splice(index, 1)
+    await gistStorage.deletePromoCode(id)
 
     return NextResponse.json({ success: true })
   } catch (error) {

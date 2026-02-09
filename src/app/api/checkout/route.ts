@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe'
 import { extractVolumeFromProductName } from '@/lib/shipping'
+import { GitHubGistStorage } from '@/lib/github-gist'
 
 interface CartItem {
   id: string
@@ -52,31 +53,31 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Create line items for Stripe
+    // Calculate total before discount
+    const subtotal = items.reduce(
+      (sum: number, item: CartItem) => sum + item.price * item.quantity,
+      0,
+    )
+
+    // Calculate discount multiplier (e.g., 10% off = 0.90)
+    const discountMultiplier =
+      promoCode && discountAmount > 0
+        ? Math.max(0, (subtotal - discountAmount) / subtotal)
+        : 1
+
+    // Create line items for Stripe with discount applied proportionally
     const lineItems = items.map((item: CartItem) => ({
       price_data: {
         currency: 'aud',
         product_data: {
           name: item.name,
+          description: promoCode ? `Discount applied: ${promoCode}` : undefined,
         },
-        unit_amount: item.price,
+        // Apply discount proportionally and ensure it's an integer
+        unit_amount: Math.round(item.price * discountMultiplier),
       },
       quantity: item.quantity,
     }))
-
-    // Add discount as a negative line item if promo code is applied
-    if (promoCode && discountAmount > 0) {
-      lineItems.push({
-        price_data: {
-          currency: 'aud',
-          product_data: {
-            name: `Discount (${promoCode})`,
-          },
-          unit_amount: -discountAmount,
-        },
-        quantity: 1,
-      })
-    }
 
     // Add shipping cost as a line item if shipping method is selected and cost > 0
     if (collectionMethod === 'shipping' && shippingCost > 0) {
@@ -127,24 +128,21 @@ export async function POST(request: NextRequest) {
     const session = await stripe.checkout.sessions.create(sessionConfig as any)
 
     // Increment promo code usage count if a promo code was applied
-    if (promoCode) {
+    if (promoCode && process.env.GITHUB_GIST_ID && process.env.GITHUB_TOKEN) {
       try {
-        // Fetch current promo codes
-        const promoCodesResponse = await fetch(
-          `${request.nextUrl.origin}/api/promo-codes`,
-          { cache: 'no-store' },
+        const gistStorage = new GitHubGistStorage(
+          process.env.GITHUB_GIST_ID,
+          process.env.GITHUB_TOKEN
         )
-        const { promoCodes } = await promoCodesResponse.json()
-
-        // Find and update the promo code usage
-        const promoCodeData = promoCodes.find(
-          (pc: { code: string }) => pc.code === promoCode,
-        )
+        
+        const promoCodes = await gistStorage.getPromoCodes()
+        const promoCodeData = promoCodes.find((pc) => pc.code === promoCode)
 
         if (promoCodeData) {
-          // Note: In a production environment, you'd want to update this in a database
-          // For now, we're just tracking it in memory via the API
+          // Increment usage count and save to GitHub Gist
           promoCodeData.usageCount = (promoCodeData.usageCount || 0) + 1
+          await gistStorage.savePromoCode(promoCodeData)
+          console.log(`✅ Incremented usage count for promo code: ${promoCode}`)
         }
       } catch (error) {
         console.error('Error updating promo code usage:', error)

@@ -26,6 +26,17 @@ export interface Order {
   notes?: string
 }
 
+export interface PromoCode {
+  id: string
+  code: string
+  discountPercentage: number
+  active: boolean
+  createdAt: string
+  usageCount: number
+  maxUsages?: number
+  expiresAt?: string
+}
+
 export class GitHubGistStorage {
   private gistId: string
   private token: string
@@ -36,6 +47,7 @@ export class GitHubGistStorage {
   }
 
   private ordersCache: { data: Order[]; timestamp: number } | null = null
+  private promoCodesCache: { data: PromoCode[]; timestamp: number } | null = null
   private readonly CACHE_TTL = 30000 // 30 seconds
 
   async getOrders(): Promise<Order[]> {
@@ -294,5 +306,165 @@ export class GitHubGistStorage {
       console.error('Error fetching herbs data:', error)
       return []
     }
+  }
+
+  async getPromoCodes(): Promise<PromoCode[]> {
+    // Return cached data if still valid
+    if (this.promoCodesCache && Date.now() - this.promoCodesCache.timestamp < this.CACHE_TTL) {
+      return this.promoCodesCache.data
+    }
+
+    try {
+      const headers: Record<string, string> = {
+        Authorization: `token ${this.token}`,
+        Accept: 'application/vnd.github.v3+json',
+      }
+
+      // Add ETag for conditional requests if we have it cached
+      if (this.promoCodesCache && (this.promoCodesCache as any).etag) {
+        headers['If-None-Match'] = (this.promoCodesCache as any).etag
+      }
+
+      const response = await fetch(
+        `https://api.github.com/gists/${this.gistId}`,
+        { headers }
+      )
+
+      // If 304 Not Modified, return cached data
+      if (response.status === 304 && this.promoCodesCache) {
+        return this.promoCodesCache.data
+      }
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch promo codes: ${response.status}`)
+      }
+
+      const gist = await response.json()
+      const promoCodesFile = gist.files['promo-codes.json']
+
+      if (!promoCodesFile?.content?.trim()) {
+        const emptyResult: PromoCode[] = []
+        this.promoCodesCache = {
+          data: emptyResult,
+          timestamp: Date.now(),
+          etag: response.headers.get('etag')
+        } as any
+        return emptyResult
+      }
+
+      try {
+        const promoCodes = JSON.parse(promoCodesFile.content)
+        
+        // Cache the result with ETag for next request
+        this.promoCodesCache = {
+          data: promoCodes,
+          timestamp: Date.now(),
+          etag: response.headers.get('etag')
+        } as any
+        
+        return promoCodes
+      } catch (parseError) {
+        console.error('Error parsing promo-codes.json:', parseError)
+        return []
+      }
+    } catch (error) {
+      console.error('Error fetching promo codes:', error)
+      // Return cached data if available, even if stale
+      return this.promoCodesCache?.data || []
+    }
+  }
+
+  async savePromoCodesBatch(promoCodes: PromoCode[]): Promise<void> {
+    const maxRetries = 3
+    let retryCount = 0
+    
+    while (retryCount < maxRetries) {
+      try {
+        const response = await fetch(`https://api.github.com/gists/${this.gistId}`, {
+          method: 'PATCH',
+          headers: {
+            'Authorization': `token ${this.token}`,
+            'Accept': 'application/vnd.github.v3+json',
+          },
+          body: JSON.stringify({
+            files: {
+              'promo-codes.json': {
+                content: JSON.stringify(promoCodes, null, 2)
+              }
+            }
+          })
+        })
+
+        if (response.ok) {
+          // Clear cache after successful update
+          this.promoCodesCache = null
+          return
+        }
+
+        if (response.status === 409 && retryCount < maxRetries - 1) {
+          // Conflict - wait and retry with fresh data
+          retryCount++
+          console.log(`Gist update conflict, retrying (${retryCount}/${maxRetries})...`)
+          await new Promise(resolve => setTimeout(resolve, 1000 * retryCount))
+          
+          // Refresh promo codes and retry
+          this.promoCodesCache = null
+          const freshPromoCodes = await this.getPromoCodes()
+          
+          // Re-merge the new promo codes with fresh data
+          const promoCodeMap = new Map(freshPromoCodes.map(pc => [pc.id, pc]))
+          promoCodes.forEach(promoCode => promoCodeMap.set(promoCode.id, promoCode))
+          promoCodes = Array.from(promoCodeMap.values())
+          
+          continue
+        }
+
+        const errorData = await response.json()
+        throw new Error(
+          `Failed to save promo codes: ${response.status} - ${
+            errorData.message || 'Unknown error'
+          }`
+        )
+      } catch (error) {
+        if (retryCount === maxRetries - 1) {
+          throw error
+        }
+        retryCount++
+        await new Promise(resolve => setTimeout(resolve, 1000 * retryCount))
+      }
+    }
+  }
+
+  async savePromoCode(promoCode: PromoCode): Promise<void> {
+    const promoCodes = await this.getPromoCodes()
+    
+    // Check if promo code already exists
+    const existingIndex = promoCodes.findIndex(pc => pc.id === promoCode.id)
+    
+    if (existingIndex >= 0) {
+      // Update existing promo code
+      promoCodes[existingIndex] = promoCode
+      console.log(`📝 Updated existing promo code: ${promoCode.id}`)
+    } else {
+      // Add new promo code
+      promoCodes.push(promoCode)
+      console.log(`➕ Added new promo code: ${promoCode.id}`)
+    }
+
+    await this.savePromoCodesBatch(promoCodes)
+  }
+
+  async updatePromoCodeStatus(id: string, active: boolean): Promise<void> {
+    const promoCodes = await this.getPromoCodes()
+    const updatedPromoCodes = promoCodes.map((pc) =>
+      pc.id === id ? { ...pc, active } : pc
+    )
+    await this.savePromoCodesBatch(updatedPromoCodes)
+  }
+
+  async deletePromoCode(id: string): Promise<void> {
+    const promoCodes = await this.getPromoCodes()
+    const filteredPromoCodes = promoCodes.filter((pc) => pc.id !== id)
+    await this.savePromoCodesBatch(filteredPromoCodes)
   }
 }
