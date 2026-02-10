@@ -97,6 +97,25 @@ export async function POST(request: NextRequest) {
         
         await gistStorage.saveOrder(order)
         console.log('✅ Order saved to GitHub Gist:', order.id)
+
+        // Increment promo code usage count if a promo code was applied
+        const promoCode = session.metadata?.promoCode
+        if (promoCode) {
+          try {
+            const promoCodes = await gistStorage.getPromoCodes()
+            const promoCodeData = promoCodes.find((pc) => pc.code === promoCode)
+
+            if (promoCodeData) {
+              // Increment usage count and save to GitHub Gist
+              promoCodeData.usageCount = (promoCodeData.usageCount || 0) + 1
+              await gistStorage.savePromoCode(promoCodeData)
+              console.log(`✅ Incremented usage count for promo code: ${promoCode} (now ${promoCodeData.usageCount} uses)`)
+            }
+          } catch (error) {
+            console.error('Error updating promo code usage:', error)
+            // Don't fail the webhook if promo code tracking fails
+          }
+        }
       } else {
         console.error('❌ GitHub Gist configuration missing - order not saved to Gist')
       }

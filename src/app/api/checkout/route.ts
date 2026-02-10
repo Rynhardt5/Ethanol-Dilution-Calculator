@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe'
 import { extractVolumeFromProductName } from '@/lib/shipping'
-import { GitHubGistStorage } from '@/lib/github-gist'
 
 interface CartItem {
   id: string
@@ -127,28 +126,8 @@ export async function POST(request: NextRequest) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const session = await stripe.checkout.sessions.create(sessionConfig as any)
 
-    // Increment promo code usage count if a promo code was applied
-    if (promoCode && process.env.GITHUB_GIST_ID && process.env.GITHUB_TOKEN) {
-      try {
-        const gistStorage = new GitHubGistStorage(
-          process.env.GITHUB_GIST_ID,
-          process.env.GITHUB_TOKEN
-        )
-        
-        const promoCodes = await gistStorage.getPromoCodes()
-        const promoCodeData = promoCodes.find((pc) => pc.code === promoCode)
-
-        if (promoCodeData) {
-          // Increment usage count and save to GitHub Gist
-          promoCodeData.usageCount = (promoCodeData.usageCount || 0) + 1
-          await gistStorage.savePromoCode(promoCodeData)
-          console.log(`✅ Incremented usage count for promo code: ${promoCode}`)
-        }
-      } catch (error) {
-        console.error('Error updating promo code usage:', error)
-        // Don't fail the checkout if promo code tracking fails
-      }
-    }
+    // Note: Promo code usage count is incremented in the webhook handler
+    // after successful payment is confirmed
 
     return NextResponse.json({ url: session.url })
   } catch (error) {
